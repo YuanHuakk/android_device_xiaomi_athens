@@ -1,0 +1,168 @@
+diff --git a/packages/SystemUI/compose/features/src/com/android/systemui/shade/ui/composable/ShadeHeader.kt b/packages/SystemUI/compose/features/src/com/android/systemui/shade/ui/composable/ShadeHeader.kt
+index fa73ce5783c5bffbe6fb8d2ee0a55f94be20a577..760b6e6a7ba0d0be0d091243400258f2ec68ddcb 100644
+--- a/packages/SystemUI/compose/features/src/com/android/systemui/shade/ui/composable/ShadeHeader.kt
++++ b/packages/SystemUI/compose/features/src/com/android/systemui/shade/ui/composable/ShadeHeader.kt
+@@ -54,15 +54,20 @@ import androidx.compose.runtime.LaunchedEffect
+ import androidx.compose.runtime.ReadOnlyComposable
+ import androidx.compose.runtime.derivedStateOf
+ import androidx.compose.runtime.getValue
++import androidx.compose.runtime.mutableStateOf
+ import androidx.compose.runtime.remember
+ import androidx.compose.runtime.rememberCoroutineScope
++import androidx.compose.runtime.setValue
+ import androidx.compose.ui.Alignment
+ import androidx.compose.ui.Modifier
+ import androidx.compose.ui.graphics.Color
+ import androidx.compose.ui.graphics.TransformOrigin
+ import androidx.compose.ui.graphics.graphicsLayer
+ import androidx.compose.ui.graphics.toArgb
++import androidx.compose.ui.layout.AlignmentLine
++import androidx.compose.ui.layout.FirstBaseline
+ import androidx.compose.ui.layout.Layout
++import androidx.compose.ui.layout.layout
+ import androidx.compose.ui.layout.layoutId
+ import androidx.compose.ui.layout.onGloballyPositioned
+ import androidx.compose.ui.layout.positionInWindow
+@@ -70,6 +75,7 @@ import androidx.compose.ui.platform.LocalConfiguration
+ import androidx.compose.ui.platform.LocalContext
+ import androidx.compose.ui.platform.LocalDensity
+ import androidx.compose.ui.platform.LocalLayoutDirection
++import androidx.compose.ui.res.dimensionResource
+ import androidx.compose.ui.text.TextStyle
+ import androidx.compose.ui.text.font.DeviceFontFamilyName
+ import androidx.compose.ui.text.font.Font
+@@ -187,7 +193,14 @@ fun ContentScope.CollapsedShadeHeader(
+ ) {
+     val cutoutLocation = LocalDisplayCutout.current().location
+     val horizontalPadding =
+-        max(LocalScreenCornerRadius.current / 2f, Shade.Dimensions.HorizontalPadding)
++        maxOf(
++            LocalScreenCornerRadius.current / 2f,
++            Shade.Dimensions.HorizontalPadding,
++            dimensionResource(R.dimen.rounded_corner_content_padding),
++        )
++    val topPadding = dimensionResource(R.dimen.status_bar_padding_top)
++    val systemIconsEndPadding =
++        horizontalPadding + dimensionResource(R.dimen.status_bar_icons_padding_end)
+ 
+     val useExpandedTextFormat by
+         remember(cutoutLocation) {
+@@ -205,16 +218,21 @@ fun ContentScope.CollapsedShadeHeader(
+         startContent = {
+             Row(
+                 verticalAlignment = Alignment.CenterVertically,
+-                horizontalArrangement = Arrangement.spacedBy(5.dp),
++                horizontalArrangement = Arrangement.spacedBy(3.dp),
+                 modifier =
+-                    Modifier.padding(horizontal = horizontalPadding)
++                    Modifier.padding(
++                            start = horizontalPadding,
++                            top = topPadding,
++                            end = horizontalPadding,
++                        )
+                         .layoutId(ShadeHeader.LayoutId.StartContent),
+             ) {
+                 Clock(
+                     onClick = viewModel::onClockClicked,
+                     textColor = textColor,
+                     modifier =
+-                        Modifier.sysuiResTag("expanded_header_clock")
++                        Modifier.alignByBaseline()
++                            .sysuiResTag("expanded_header_clock")
+                             .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
+                             .wrapContentSize(Alignment.CenterStart),
+                 )
+@@ -222,7 +240,9 @@ fun ContentScope.CollapsedShadeHeader(
+                     longerDateText = viewModel.longerDateText,
+                     shorterDateText = viewModel.shorterDateText,
+                     textColor = textColor,
+-                    modifier = Modifier.element(ShadeHeader.Elements.CollapsedContentStart),
++                    modifier =
++                        Modifier.alignByBaseline()
++                            .element(ShadeHeader.Elements.CollapsedContentStart),
+                 )
+             }
+         },
+@@ -231,7 +251,11 @@ fun ContentScope.CollapsedShadeHeader(
+                 Box(
+                     modifier =
+                         Modifier.fillMaxSize()
+-                            .padding(horizontal = horizontalPadding)
++                            .padding(
++                                start = horizontalPadding,
++                                top = topPadding,
++                                end = horizontalPadding,
++                            )
+                             .layoutId(ShadeHeader.LayoutId.EndContent)
+                 ) {
+                     PrivacyChip(
+@@ -246,7 +270,11 @@ fun ContentScope.CollapsedShadeHeader(
+                     verticalAlignment = Alignment.CenterVertically,
+                     modifier =
+                         Modifier.element(ShadeHeader.Elements.CollapsedContentEnd)
+-                            .padding(horizontal = horizontalPadding)
++                            .padding(
++                                start = horizontalPadding,
++                                top = topPadding,
++                                end = systemIconsEndPadding,
++                            )
+                             .layoutId(ShadeHeader.LayoutId.EndContent),
+                 ) {
+                     if (isSplitShade) {
+@@ -592,6 +620,7 @@ private fun ContentScope.Clock(
+     textColor: Color? = null,
+ ) {
+     val layoutDirection = LocalLayoutDirection.current
++    var clockView by remember { mutableStateOf<Clock?>(null) }
+ 
+     ElementWithValues(
+         key = ShadeHeader.Elements.Clock,
+@@ -615,6 +644,7 @@ private fun ContentScope.Clock(
+                             null,
+                         )
+                         .apply {
++                            clockView = this
+                             isSingleLine = true
+                             textDirection = View.TEXT_DIRECTION_LOCALE
+                             gravity = Gravity.START or Gravity.CENTER_VERTICAL
+@@ -656,6 +686,16 @@ private fun ContentScope.Clock(
+                                     0.5f,
+                                 )
+                         }
++                        // AndroidView does not expose TextView baselines to Compose.
++                        .layout { measurable, constraints ->
++                            val placeable = measurable.measure(constraints)
++                            val baseline = clockView?.baseline ?: -1
++                            val alignmentLines: Map<AlignmentLine, Int> =
++                                if (baseline >= 0) mapOf(FirstBaseline to baseline) else emptyMap()
++                            layout(placeable.width, placeable.height, alignmentLines) {
++                                placeable.placeRelative(0, 0)
++                            }
++                        }
+                         .thenIf(onClick != null) { Modifier.clickable { onClick?.invoke() } },
+             )
+         }
+diff --git a/packages/SystemUI/src/com/android/systemui/scene/ui/viewmodel/SceneContainerViewModel.kt b/packages/SystemUI/src/com/android/systemui/scene/ui/viewmodel/SceneContainerViewModel.kt
+index 3ca7dc26d45615ffea6a94d21222988c87570621..8001a3b050590ff9b83a8e979746a343a56d114f 100644
+--- a/packages/SystemUI/src/com/android/systemui/scene/ui/viewmodel/SceneContainerViewModel.kt
++++ b/packages/SystemUI/src/com/android/systemui/scene/ui/viewmodel/SceneContainerViewModel.kt
+@@ -19,6 +19,7 @@ package com.android.systemui.scene.ui.viewmodel
+ import android.annotation.StringRes
+ import android.content.res.Resources
+ import android.os.Build
++import android.util.Log
+ import android.view.MotionEvent
+ import android.view.WindowInsetsController
+ import androidx.compose.runtime.getValue
+@@ -553,6 +554,11 @@ constructor(
+             return
+         }
+ 
++        // Keep daily userdebug builds quiet; opt in when diagnosing rejected gestures.
++        if (!Log.isLoggable("SceneContainerFalsing", Log.DEBUG)) {
++            return
++        }
++
+         toastDisplayer.get().displayToast(text)
+     }
+ 

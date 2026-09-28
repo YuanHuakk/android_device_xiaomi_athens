@@ -1,0 +1,38 @@
+diff --git a/ipanat/Android.bp b/ipanat/Android.bp
+index 732549d31a8fa7ffea582de10b7438e454ebaebc..47115c3bcfe49ca160a09ebe905c0c3c679a3a37 100644
+--- a/ipanat/Android.bp
++++ b/ipanat/Android.bp
+@@ -1,7 +1,7 @@
+ cc_library_shared {
+     name: "libipanat",
+ 
+-    header_libs: ["device_kernel_headers"]+["qti_kernel_headers"]+["qti_ipa_kernel_headers"],
++    header_libs: ["device_kernel_headers"]+["qti_kernel_headers"]+["qti_ipa_kernel_headers"]+["qti_ipa_uapi_headers"],
+ 
+     srcs: [
+         "src/ipa_nat_map.cpp",
+diff --git a/Android.bp b/Android.bp
+new file mode 100644
+index 00000000..f1b350f1
+--- /dev/null
++++ b/Android.bp
+@@ -0,0 +1,19 @@
++// athens: `qti_ipa_kernel_headers` inherits `generated_kernel_header_defaults`, whose
++// generator runs `make headers_install` against an in-tree kernel source tree. athens
++// ships a *prebuilt* kernel, so that generator produces nothing (its gen/ dir holds only
++// .dummy_dep) and the IPA uapi headers are missing for libipanat and ipacm -- both of
++// which do `#include <linux/msm_ipa.h>`.
++//
++// The identical headers are already carried in this repo under
++// drivers/platform/msm/include/uapi, so export that directory directly. The original
++// qti_ipa_kernel_headers entry is left in place so the modules still resolve correctly
++// on trees that do build the kernel from source.
++
++cc_library_headers {
++    name: "qti_ipa_uapi_headers",
++
++    export_include_dirs: ["drivers/platform/msm/include/uapi"],
++
++    vendor_available: true,
++    recovery_available: true,
++}

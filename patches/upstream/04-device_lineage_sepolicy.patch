@@ -1,0 +1,18 @@
+diff --git a/common/private/compat/202604/202604.ignore.cil b/common/private/compat/202604/202604.ignore.cil
+new file mode 100644
+index 0000000..ac8b827
+--- /dev/null
++++ b/common/private/compat/202604/202604.ignore.cil
+@@ -0,0 +1,12 @@
++;; new_objects - a collection of types that have been introduced that have no
++;;   analogue in older policy.  Thus, we do not need to map these types to
++;;   previous ones.  Add here to pass checkapi tests.
++(type new_objects)
++(typeattribute new_objects)
++(typeattributeset new_objects
++  ( new_objects
++    iso9660
++    udf
++    usb_uvc_config_prop
++    vendor_persist_nfc_prop
++    xtra_control_prop))

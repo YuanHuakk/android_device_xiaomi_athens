@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Athens stock panel brightness-to-nits calibration. HBM/HDR policy is not
+     imported: stock zero HDR coverage and timing do not match AOSP behavior. -->
+<displayConfiguration>
+    <screenBrightnessMap>
+        <point>
+            <value>0.000366256</value>
+            <nits>1.0</nits>
+        </point>
+        <point>
+            <value>0.004700280</value>
+            <nits>2.0</nits>
+        </point>
+        <point>
+            <value>0.012452692</value>
+            <nits>5.0</nits>
+        </point>
+        <point>
+            <value>0.021303870</value>
+            <nits>10.0</nits>
+        </point>
+        <point>
+            <value>0.067085826</value>
+            <nits>60.0</nits>
+        </point>
+        <point>
+            <value>0.411976560</value>
+            <nits>850.0</nits>
+        </point>
+        <point>
+            <value>0.476071298</value>
+            <nits>1060.0</nits>
+        </point>
+        <point>
+            <value>0.824014161</value>
+            <nits>2200.0</nits>
+        </point>
+        <point>
+            <value>0.976620681</value>
+            <nits>4500.0</nits>
+        </point>
+        <point>
+            <value>1.0</value>
+            <nits>10000.0</nits>
+        </point>
+    </screenBrightnessMap>
+    <ambientLightHorizonLong>3000</ambientLightHorizonLong>
+    <ambientLightHorizonShort>1000</ambientLightHorizonShort>
+</displayConfiguration>

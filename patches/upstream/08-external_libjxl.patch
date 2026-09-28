@@ -1,0 +1,12 @@
+diff --git a/Android.bp b/Android.bp
+index 18741882ca81e1fa14438334963b64cd15c7a58e..b6b140413d37d61c3e20547d55a0f12a96d53adb 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -17,7 +17,6 @@ license {
+ cc_library {
+     name: "libjxl",
+     host_supported: true,
+-    vendor_available: true,
+     cflags: [
+         "-DJPEGXL_ENABLE_SKCMS=1",
+     ],

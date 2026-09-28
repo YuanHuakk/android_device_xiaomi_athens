@@ -1,0 +1,3 @@
+# Stock mfp-daemon extensions share the existing Xiaomi fingerprint HAL type.
+com.fingerprints.fpc.extension.IFpcExtension/default u:object_r:vendor_hal_fingerprint_service_xiaomi:s0
+vendor.xiaomi.hardware.fingerprintextension.IXiaomiFingerprint/default u:object_r:vendor_hal_fingerprint_service_xiaomi:s0

@@ -1,0 +1,10 @@
+# userdebug/eng only; observe startup without changing the recovery entry point.
+on post-fs
+    start athens-boot-diagnostics
+
+service athens-boot-diagnostics /system/bin/sh /system/bin/athens-collect.sh
+    user root
+    group root log readproc
+    seclabel u:r:su:s0
+    disabled
+    oneshot

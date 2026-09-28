@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Verified on athens with the stock 100 W adapter: PD_PPS, quick_charge_type=4.
+         The MCA USB current_max node reports zero, so HealthInfo power cannot
+         classify this session. Use the kernel OEM status for the charging label. -->
+    <string-array name="config_oemFastChargerStatusPaths" translatable="false">
+        <item>/sys/class/xm_power/charger/charger_common/quick_charge_type;4</item>
+    </string-array>
+</resources>

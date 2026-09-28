@@ -1,0 +1,87 @@
+[
+  {
+    "project": "bootable/recovery",
+    "base_commit": "410707c908dc61faec79bf9fec2ef17712fde8ce",
+    "patch": "upstream/01-bootable_recovery.patch"
+  },
+  {
+    "project": "build/make",
+    "base_commit": "f44b2fc3af631ab64b8ceb8df46b16172e6cc7b2",
+    "patch": "upstream/02-build_make.patch"
+  },
+  {
+    "project": "build/release",
+    "base_commit": "c85f4aebe46714235599a9bd6430a0fe30c6e8d5",
+    "patch": "upstream/03-build_release.patch"
+  },
+  {
+    "project": "device/lineage/sepolicy",
+    "base_commit": "05c422d99e5a4e44acc02f090a56ada263b5c55b",
+    "patch": "upstream/04-device_lineage_sepolicy.patch"
+  },
+  {
+    "project": "device/qcom/sepolicy",
+    "base_commit": "9e8808ec261ed0c51872abfbefe621ba89c98c27",
+    "patch": "upstream/05-device_qcom_sepolicy.patch"
+  },
+  {
+    "project": "device/xiaomi/sm8850-common",
+    "base_commit": "634c55bfb3ba1952569dcbf5bdbc6c26040c0b59",
+    "patch": "upstream/06-device_xiaomi_sm8850-common.patch"
+  },
+  {
+    "project": "external/dng_sdk",
+    "base_commit": "abfb92d7448cd05bd9d85bbcbfcd9b164403a13c",
+    "patch": "upstream/07-external_dng_sdk.patch"
+  },
+  {
+    "project": "external/libjxl",
+    "base_commit": "cbd5d8a0e4e7232e440ad64e712bc8a45fd52a11",
+    "patch": "upstream/08-external_libjxl.patch"
+  },
+  {
+    "project": "frameworks/base",
+    "base_commit": "967733c9ca4ea1a3bef767cf7ec1e5f241429e30",
+    "patch": "upstream/09-frameworks_base.patch"
+  },
+  {
+    "project": "hardware/qcom-caf/sm8850/data-ipa-cfg-mgr",
+    "base_commit": "7609751c45981edb1a2c1be1e638b4748525c171",
+    "patch": "upstream/10-hardware_qcom-caf_sm8850_data-ipa-cfg-mgr.patch"
+  },
+  {
+    "project": "hardware/qcom-caf/sm8850/dataipa",
+    "base_commit": "d9bd0c38b288cd8b4e91cbc725f365067a3d6fc5",
+    "patch": "upstream/11-hardware_qcom-caf_sm8850_dataipa.patch"
+  },
+  {
+    "project": "hardware/qcom-caf/thermal",
+    "base_commit": "a54c4bef6ae6df53684ec538e9fdd713775238cb",
+    "patch": "upstream/12-hardware_qcom-caf_thermal.patch"
+  },
+  {
+    "project": "hardware/qcom-caf/wlan",
+    "base_commit": "4593f9b377e25a7cd55b2319e7f85bf5ae35104b",
+    "patch": "upstream/13-hardware_qcom-caf_wlan.patch"
+  },
+  {
+    "project": "hardware/xiaomi",
+    "base_commit": "929737d07a278fa3afc27304ff0a9cc2d1253142",
+    "patch": "upstream/14-hardware_xiaomi.patch"
+  },
+  {
+    "project": "system/core",
+    "base_commit": "a5313eaec0219b021aaa5e59cc10dd07cfa8504c",
+    "patch": "upstream/15-system_core.patch"
+  },
+  {
+    "project": "system/vold",
+    "base_commit": "11d8982f824d52e8122c7aa732207ba66b8f23c8",
+    "patch": "upstream/16-system_vold.patch"
+  },
+  {
+    "project": "vendor/qcom/opensource/vibrator",
+    "base_commit": "7ec51495bebe272097fc5b7f95cbf5ff92180e71",
+    "patch": "upstream/17-vendor_qcom_opensource_vibrator.patch"
+  }
+]

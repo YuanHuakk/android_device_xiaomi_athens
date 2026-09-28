@@ -1,0 +1,22 @@
+diff --git a/ipacm/Android.bp b/ipacm/Android.bp
+index 34007907f16d3e01d9670f9aebf375d29248437f..247edd6a086f9860cd802ca183a6140810af3bbd 100644
+--- a/ipacm/Android.bp
++++ b/ipacm/Android.bp
+@@ -4,7 +4,7 @@ cc_binary {
+ 
+     local_include_dirs: ["src"] + ["inc"],
+     header_libs: ["device_kernel_headers"]+["qti_kernel_headers",
+-	"libutils_headers", "libcutils_headers"]+["qti_ipa_kernel_headers"],
++	"libutils_headers", "libcutils_headers"]+["qti_ipa_kernel_headers", "qti_ipa_uapi_headers"],
+ 
+     cflags: ["-DFEATURE_IPA_ANDROID"] + ["-DFEATURE_IPACM_RESTART"] + [
+         "-DFEATURE_IPACM_AIDL",
+@@ -83,7 +83,7 @@ cc_fuzz {
+ 
+     local_include_dirs: ["src"] + ["inc"],
+     header_libs: ["device_kernel_headers"]+["qti_kernel_headers",
+-	"libutils_headers", "libcutils_headers"]+["qti_ipa_kernel_headers"],
++	"libutils_headers", "libcutils_headers"]+["qti_ipa_kernel_headers", "qti_ipa_uapi_headers"],
+ 
+     cflags: ["-v"] + ["-DFEATURE_IPA_ANDROID"] + ["-DFEATURE_IPACM_RESTART"] + [
+         "-DFEATURE_IPACM_AIDL",

@@ -1,0 +1,23 @@
+# Generated/proprietary inputs and build output
+/camera/*.apk
+/camera/*.idsig
+/vendor/
+/out/
+/artifacts/
+/stock/
+/backups/
+/reports/
+__pycache__/
+*.pyc
+*.log
+*.zip
+*.tar
+*.tar.gz
+*.pk8
+*.pem
+*.jks
+*.keystore
+*.img
+!avb/oem_boot_descriptors.img
+.env
+.env.*

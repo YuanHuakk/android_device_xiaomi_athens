@@ -1,0 +1,13 @@
+diff --git a/aidl/VibratorSelector/VibratorSelector.h b/aidl/VibratorSelector/VibratorSelector.h
+index 3076c444be6c6080ab0b7e3650c85b0cb3520d91..bb14eb692c1d59af34e200eec041b39ca9e84aed 100644
+--- a/aidl/VibratorSelector/VibratorSelector.h
++++ b/aidl/VibratorSelector/VibratorSelector.h
+@@ -36,6 +36,8 @@
+ #ifndef VIBRATOR_SELECTOR_H
+ #define VIBRATOR_SELECTOR_H
+ 
++#include <memory>
++#include <string>
+ #include <vector>
+ #include <expat.h>
+ 

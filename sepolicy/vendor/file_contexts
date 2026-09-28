@@ -1,0 +1,71 @@
+#
+# Copyright (C) 2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# athens 把 NXP 的 Keymint-StrongBox / Weaver / （小米）AuthSecret 三个 HAL 放在
+# **/odm/bin/hw/**，而 QTI 的 sm8850 策略只按 **/vendor/bin/hw/** 正则标注。
+#
+# 实测判据（用 python re.fullmatch 把 QTI
+# device/qcom/sepolicy_vndr/sm8850/qva/vendor/common/file_contexts 的**全部**规则
+# 逐条跑这三个绝对路径 —— 不是目测）：
+#   /odm/bin/hw/android.hardware.security.keymint3-service.strongbox.nxp  → 无任何规则匹配
+#   /odm/bin/hw/android.hardware.weaver-service.nxp-qti                   → 无任何规则匹配
+#   /odm/bin/hw/vendor.xiaomi.hardware.authsecretd                        → 无任何规则匹配
+#
+# 后果是**静默不启动**：未标注的 /odm/bin/hw/* 落到 vendor_file，init 拿不到 exec 权限，
+# 服务连进程都起不来，日志里只有一条 avc，功能表现为"指纹/锁屏密码相关功能偶发异常"。
+#
+# 写法沿用公共树 sepolicy/vendor/file_contexts:174-176 的先例 —— 那里为 GNSS 写过同一类
+# 问题的补丁，注释原话是 "it runs unlabelled and never starts"，用的就是
+# /(odm|vendor/odm)/ 前缀（/vendor/odm 是 odm 分区的 bind mount，两条路径都要覆盖）。
+#
+# ⚠️ 本文件**不新造任何类型**。下面三个类型全部已存在于我们实际编入的策略集里，
+#    理由逐条写在各自条目上方。新增类型意味着新增 allow 规则集，那是只有拿到实机 avc
+#    才能做的事，不属于 P3。
+#
+
+# 1) Keymint StrongBox（NXP）
+#    QTI 自己的正则里就写进了这个文件名形式：
+#      file_contexts:99  /vendor/bin/hw/android\.hardware\.security\.keymint3?-service\.strongbox[-\.]nxp
+#    与 athens 的文件名**逐字符可匹配**（`[-\.]` 吃掉那个点），只差 /vendor → /odm。
+#    类型定义在 sm8850/qva/vendor/common/hal_keymint_strongbox.te，
+#    原厂 precompiled_sepolicy 的类型表里也有这个类型名（strings 实测 ✅）。
+/(odm|vendor/odm)/bin/hw/android\.hardware\.security\.keymint3-service\.strongbox\.nxp  u:object_r:vendor_hal_keymint_strongbox_exec:s0
+
+# 2) Weaver（NXP）
+#      file_contexts:102  /(vendor|system/vendor)/bin/hw/android\.hardware\.weaver-service\.nxp(-qti)?
+#    athens 的文件名是 weaver-service.nxp-qti，同样只差前缀。
+#    类型定义在 sm8850/qva/vendor/common/hal_weaver_default.te。
+/(odm|vendor/odm)/bin/hw/android\.hardware\.weaver-service\.nxp-qti                  u:object_r:vendor_hal_weaver_default_exec:s0
+
+# 3) AuthSecret（小米私有，原厂标注 hal_miweaver_default_exec）
+#    ⚠️ 这一条的类型是**判断**，不是取证。判断依据如下，三条都指向同一个结论：
+#
+#    a. 原厂名字**取不到**。原厂 vendor/etc/selinux/vendor_file_contexts:196 写的是
+#       hal_miweaver_default_exec，该类型确实存在于原厂 precompiled_sepolicy 的类型表，
+#       但**定义不在任何我们能拿到的源码里**：odm_sepolicy.cil 只有 23 行、不含它；
+#       真正的来源是小米自家的 vendor sepolicy，也就是 stock vndservice_contexts 里
+#       `#line 1 "vendor/xiaomi/proprietary/.../vndservice_contexts"` 指的那个 mivendor 工程，
+#       它不在本 ROM 的 manifest 中。所以不能照抄名字，只能映射到语义最近的既有类型。
+#
+#    b. 选 hal_authsecret_default_exec，**不**选 vendor_hal_authsecret_qti_exec。
+#       NEEDED 实测：authsecretd 依赖 libGPTEE_vendor.so（NXP GlobalPlatform TEE 客户端），
+#       且**不含任何 QTI SPU 依赖**（无 libspcom*、无 skp / sp_keymaster / spss_utils）。
+#       而 vendor_hal_authsecret_qti.te 整份是围绕 spcom/skp/spss_utils 写的，套不上。
+#
+#    c. QTI 用**同一个类型**标注同一条 NXP eSE 栈上的服务：
+#         file_contexts:104  /vendor/bin/hw/android\.hardware\.authsecret-service\.nxp-qti
+#                                                       → hal_authsecret_default_exec
+#       该行同时也证明这个类型在策略集里是可编译的（QTI 自己在引用它）。
+#
+#    ⚠️ 构建期风险，**会响亮报错、不会静默**：authsecretd 的 rc 用 `user system`
+#       （odm/etc/init/vendor.xiaomi.hardware.authsecretd.rc:3-5，
+#        user system / group system drmrpc / oneshot / disabled）。若 AOSP neverallow
+#       不允许 hal_authsecret_default 以 system uid 运行，`m` 会在 checkpolicy 阶段
+#       直接 failed。届时的处理是在 device sepolicy 里自定义 domain，
+#       **不是**放宽 neverallow（实施方案 §9.6 明令）。
+/odm/bin/hw/vendor\.xiaomi\.hardware\.authsecretd                                   u:object_r:hal_authsecret_default_exec:s0
+
+# Stock AIDL fingerprint daemon; its rc is fixed up to the same existing domain.
+/(odm|vendor/odm)/bin/hw/mfp-daemon u:object_r:hal_fingerprint_default_exec:s0

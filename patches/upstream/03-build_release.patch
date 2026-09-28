@@ -1,0 +1,14 @@
+diff --git a/flag_values/trunk_staging/RELEASE_PLATFORM_SECURITY_PATCH.textproto b/flag_values/trunk_staging/RELEASE_PLATFORM_SECURITY_PATCH.textproto
+index 47a1d922aeba9cf86ff666d3194f19fd45c3ccd8..fc684139cfdffc61fe649d22bdd0b3c5e7ee7139 100644
+--- a/flag_values/trunk_staging/RELEASE_PLATFORM_SECURITY_PATCH.textproto
++++ b/flag_values/trunk_staging/RELEASE_PLATFORM_SECURITY_PATCH.textproto
+@@ -1,4 +1,6 @@
++# PixelOS seventeen September ASB source baseline (manifest c16cfd0c95c5).
++# The AOSP launch release configuration retained June despite the ASB forks.
+ name: "RELEASE_PLATFORM_SECURITY_PATCH"
+ value: {
+-  string_value: "2026-06-05"
+-}
+\ No newline at end of file
++  string_value: "2026-09-01"
++}

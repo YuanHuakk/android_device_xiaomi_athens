@@ -1,0 +1,15 @@
+diff --git a/init/property_service.cpp b/init/property_service.cpp
+index 0b843d5a2eb203223d1fe006bd3db4d78c185470..771e37d2b3c2585701e2f763a33582480a0bdb45 100644
+--- a/init/property_service.cpp
++++ b/init/property_service.cpp
+@@ -1413,8 +1413,8 @@ static void SetSafetyNetProps() {
+     InitPropertySet("ro.boot.veritymode", "enforcing");
+     InitPropertySet("ro.boot.warranty_bit", "0");
+     InitPropertySet("ro.build.tags", "release-keys");
+-#ifndef ENG_BUILD
+-    // Spoof non-eng builds (such as userdebug) to user
++#if !defined(ENG_BUILD) && !ALLOW_LOCAL_PROP_OVERRIDE
++    // Preserve debuggable userdebug builds; do not disable their ADB support.
+     InitPropertySet("ro.build.type", "user");
+     InitPropertySet("ro.debuggable", "0");
+ #endif

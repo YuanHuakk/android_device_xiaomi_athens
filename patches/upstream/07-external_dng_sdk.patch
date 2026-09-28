@@ -1,0 +1,49 @@
+diff --git a/Android.bp b/Android.bp
+index 02e6e8a0e0b2b433bb45417dab93d3e52628f597..99e08d138723bc9d07ce4f26bf8a142d75c50e98 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -185,7 +185,6 @@ cc_library {
+     name: "libdng_sdk",
+     host_supported: true,
+     defaults: ["libdng_sdk-defaults"],
+-    vendor_available: true,
+ 
+     sanitize: {
+         // For now we want to disable the ubsan_minimal runtime so that we can
+diff --git a/source/dng_xmp_sdk.cpp b/source/dng_xmp_sdk.cpp
+index f4f765f35ba1a7bb39e1648ac616e7d3e19ef2b8..0507dd0aebf0d5acbedf6e52a3e8c9c5b80c95b4 100644
+--- a/source/dng_xmp_sdk.cpp
++++ b/source/dng_xmp_sdk.cpp
+@@ -21,6 +21,7 @@
+ #include "dng_utils.h"
+ 
+ #include <cstdio>
++#include <mutex>
+ 
+ /*****************************************************************************/
+ 
+@@ -233,12 +234,16 @@ dng_xmp_sdk::~dng_xmp_sdk ()
+ /*****************************************************************************/
+ 
+ static bool gInitializedXMP = false;
++// XMP's initialization counter and namespace/alias tables are not thread-safe.
++// Image decoders can reach MakeMeta concurrently on their first DNG decode.
++static std::mutex gXMPInitializationMutex;
+ 
+ /*****************************************************************************/
+ 
+ void dng_xmp_sdk::InitializeSDK (dng_xmp_namespace * extraNamespaces,
+ 								 const char *software)
+ 	{
++	std::lock_guard<std::mutex> lock (gXMPInitializationMutex);
+ 	
+ 	if (!gInitializedXMP)
+ 		{
+@@ -510,6 +515,7 @@ void dng_xmp_sdk::InitializeSDK (dng_xmp_namespace * extraNamespaces,
+ 
+ void dng_xmp_sdk::TerminateSDK ()
+ 	{
++	std::lock_guard<std::mutex> lock (gXMPInitializationMutex);
+ 	
+ 	if (gInitializedXMP)
+ 		{

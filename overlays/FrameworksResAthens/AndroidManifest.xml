@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 The Android Open Source Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<!--
+    package 名必须全局唯一。公共树那份是 android.overlay.xiaomi，本份不能再叫同名 ——
+    同名会与 /odm/overlay/ 下已有的包冲突。
+
+    priority=801 的依据（源码取证，不是惯例）
+    =============================================================================
+    frameworks/base/core/java/com/android/internal/content/om/OverlayConfig.java
+
+      :400-401  "When multiple overlays override the same resource, the overlay with
+                 the highest priority will have its value chosen."
+                → priority 只在**同资源被多个 overlay 覆盖**时决胜，数值大者胜。
+
+      :116-128  sStaticOverlayComparator：同 targetPackage 且同 priority 时，
+                退化为按安装路径 o1.path.compareTo(o2.path) 排序。
+                → 这是**确定性但隐式**的规则：谁赢取决于 APK 文件名的字典序，
+                  任何一次改名都可能静默翻转结果。
+
+    公共树 FrameworkResOverlayXiaomi 是 priority=800。本份取 801，比它高 1。
+
+    本 overlay 同时提供 athens 的亮度标定和 power_profile。
+</-->
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="android.overlay.athens">
+
+    <overlay
+        android:isStatic="true"
+        android:priority="801"
+        android:targetPackage="android"/>
+</manifest>

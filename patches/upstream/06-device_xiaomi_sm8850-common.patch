@@ -1,0 +1,251 @@
+diff --git a/Android.bp b/Android.bp
+index e4a22a7efdc4e28a057f424d45617ee9ea6cf4df..f2ae55937f06ac21da213ab263b238f9c8314586 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -34,4 +34,13 @@ mkdir {
+     name: "vendor_modem_firmware_mountpoint",
+     dir: "modem_firmware",
+     vendor: true,
+-}
+\ No newline at end of file
++}
++
++// Android 16 WFD MotionEvent ABI adapter for the Android 17 input library.
++cc_library_shared {
++    name: "libwfdinput_compat",
++    srcs: ["compat/wfd_input.cpp"],
++    shared_libs: ["libinput"],
++    compile_multilib: "64",
++    system_ext_specific: true,
++}
+diff --git a/BoardConfigCommon.mk b/BoardConfigCommon.mk
+index 75d249626ecbf8630ce4c0dfe7c81818d51d960e..27697edf9055b1c7f5fdae78a7cdcf21ac1e3fff 100644
+--- a/BoardConfigCommon.mk
++++ b/BoardConfigCommon.mk
+@@ -146,7 +146,11 @@ VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
+ 
+ # Verified Boot
+ BOARD_AVB_ENABLE := true
+-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
++# Keep AVB chain traversal: the bootloader reads OS/SPL properties from the
++# chained boot/vbmeta_system images when the GKI v4 OS version field is zero.
++# Disable hashtree enforcement only; verification-disabled (bit 1) skips those
++# descriptors and makes athens ABL reject the image before entering the kernel.
++BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 1
+ BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
+ 
+ BOARD_AVB_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+diff --git a/common.mk b/common.mk
+index 25ec09d1fecc6f7e8a4645b8aa5fde062737614a..9cafa4c56f47385a0fdd3d44d29459d905693646 100644
+--- a/common.mk
++++ b/common.mk
+@@ -20,7 +20,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_ramdisk.mk)
+ $(call inherit-product, hardware/qcom-caf/common/common.mk)
+ 
+ # Virtualization service
++ifneq ($(TARGET_DISABLE_AVF),true)
+ $(call inherit-product, packages/modules/Virtualization/apex/product_packages.mk)
++endif
+ 
+ # Call the proprietary setup.
+ $(call inherit-product, vendor/xiaomi/sm8850-common/sm8850-common-vendor.mk)
+@@ -165,10 +167,12 @@ PRODUCT_PACKAGES += \
+     fastbootd
+ 
+ # Fingerprint
++ifneq ($(TARGET_USES_STOCK_FINGERPRINT),true)
+ $(call soong_config_set,XIAOMI_BIOMETRICS_FINGERPRINT,IMPL_VER,V2)
+ PRODUCT_PACKAGES += \
+     android.hardware.biometrics.fingerprint-service.xiaomi \
+     libudfpshandler
++endif
+ 
+ PRODUCT_COPY_FILES += \
+     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
+diff --git a/configs/properties/vendor.prop b/configs/properties/vendor.prop
+index 618f7d6b831ac7336bca45d5466b592f0e31c9ad..4b5712b5e24fcdd1d6ab815b82ba7a072cdea952 100644
+--- a/configs/properties/vendor.prop
++++ b/configs/properties/vendor.prop
+@@ -87,7 +87,7 @@ bluetooth.profile.vcp.controller.enabled=true
+ persist.bluetooth.a2dp_offload.cap=sbc-aac-aptx-aptxhd-ldac-lhdc-mihc
+ # Software A2DP: Qualcomm's offload path plays only the left channel for SBC,
+ # AAC and aptX (PAL BtFormat_GENERIC). See configs/audio/audio_module_config_primary.xml.
+-persist.bluetooth.a2dp_offload.disabled=true
++persist.bluetooth.a2dp_offload.disabled?=true
+ persist.bluetooth.leaudio_offload.disabled=false
+ persist.sys.fflag.override.settings_bluetooth_hearing_aid=true
+ persist.vendor.bt.aac_frm_ctl.enabled=true
+diff --git a/extract-files.py b/extract-files.py
+index d8680e2eec965bf35f11348df96580162a08cf22..f3ad1b3acef60d0a87888d399ed5f46db9bcc0b2 100755
+--- a/extract-files.py
++++ b/extract-files.py
+@@ -37,6 +37,7 @@ lib_fixups: lib_fixups_user_type = {
+     (
+         'vendor.qti.ImsRtpService-V2-ndk',
+         'vendor.qti.diaghal-V1-ndk',
++        'vendor.qti.hardware.wifidisplaysession_aidl-V1-ndk',
+         'vendor.qti.qccsyshal_aidl-V1-ndk',
+         'vendor.qti.qccvndhal_aidl-V1-ndk',
+     ): lib_fixup_vendor_suffix,
+@@ -65,6 +66,9 @@ blob_fixups: blob_fixups_user_type = {
+         'vendor/bin/poweropt-service',
+         'vendor/bin/poweropt-service',
+         'vendor/bin/qsap_mpamsvc',
++        # athens: 实测该 blob NEEDED libtinyxml2.so，而它只在公共清单里，所以这条
++        # fixup 必须落在公共树（实施方案 §五 6）
++        'vendor/lib64/hw/libaudiocorehal.qti.so',
+         'vendor/lib64/hw/libaudioeffecthal.qti.so',
+         'vendor/lib64/libaodoptfeature.so',
+         'vendor/lib64/libaudiocloudctrl.so',
+@@ -76,6 +80,8 @@ blob_fixups: blob_fixups_user_type = {
+         'vendor/lib64/libpowercallback.so',
+         'vendor/lib64/libpowercore.so',
+         'vendor/lib64/libpsmoptfeature.so',
++        # athens: 同上（实测 NEEDED libtinyxml2.so，且只在公共清单里）
++        'vendor/lib64/libsdmcore.so',
+         'vendor/lib64/libstandbyfeature.so',
+         'vendor/lib64/libvideooptfeature.so',
+         'vendor/lib64/libxlog.so',
+@@ -128,8 +134,17 @@ blob_fixups: blob_fixups_user_type = {
+         'vendor/etc/seccomp_policy/syshealthmon.policy'
+     ): blob_fixup()
+         .add_line_if_missing('lseek: 1'),
++    # These two DT_NEEDED entries have no imported symbols (nor dlopen/dlsym
++    # callers) in athens' libwfdcommonutils. Remove the unused ELF dependencies,
++    # rather than hiding them from generated shared_libs.
++    'system_ext/lib64/libwfdcommonutils.so': blob_fixup()
++        .remove_needed('libdng_sdk.so')
++        .remove_needed('libheif.so'),
+     'system_ext/lib64/libwfdmmsrc_system.so': blob_fixup()
+-        .replace_needed('libaudioclient.so', 'libaudiobase.so'),
++        .replace_needed('libaudioclient.so', 'libaudiobase.so')
++        .add_needed('libgui_shim.so'),
++    'system_ext/lib64/libwfdnative.so': blob_fixup()
++        .add_needed('libwfdinput_compat.so'),
+     'system_ext/lib64/libwfdservice.so': blob_fixup()
+         .add_needed('libaudiobase.so')
+         .replace_needed('android.media.audio.common.types-V4-cpp.so', 'android.media.audio.common.types-V5-cpp.so'),
+diff --git a/proprietary-files.txt b/proprietary-files.txt
+index 5384fd3ab5d90801ab8995935437dc81153256c1..72ddc3307193696cee7f24389f81f465664d81e6 100644
+--- a/proprietary-files.txt
++++ b/proprietary-files.txt
+@@ -200,7 +200,7 @@ vendor/lib64/libstream_sensorrenderer.so
+ vendor/lib64/libstream_soundtrigger.so
+ vendor/lib64/libstream_ultrasound.so
+ vendor/lib64/libtiantongpal.so
+-vendor_ext/lib64/libultrasound_notify.so:vendor/lib64/libultrasound_notify.so
++vendor/lib64/libultrasound_notify.so
+ vendor/lib64/libvui_utils.so
+ vendor/lib64/libxlog.so
+ vendor/lib64/sva_plugin.so
+@@ -762,7 +762,7 @@ vendor/lib64/libfastcrc.so
+ vendor/etc/init/vendor.qti.fastrpc.pd-default-config.rc
+ 
+ # Fingerprint
+-odm/etc/vintf/manifest/fod-aidl.xml
++# Source fingerprint HAL does not serve the MIUI private FOD extensions.
+ vendor/etc/permissions/qti_fingerprint_interface.xml
+ vendor/lib64/vendor.xiaomi.hardware.fx.tunnel-V1-ndk.so
+ vendor/lib64/vendor.qti.hardware.fingerprint-V1-ndk.so
+@@ -1698,7 +1698,7 @@ vendor/lib64/vendor.qti.snapdragonServices-V2-ndk.so
+ vendor/lib64/vendor.qti.snapdragonServices.qape-V1-ndk.so
+ 
+ # Soter
+-mi_ext/product/app/SoterService/SoterService.apk:product/app/SoterService/SoterService.apk
++product/app/SoterService/SoterService.apk
+ vendor/bin/hw/vendor.qti.hardware.soter-service
+ vendor/bin/vendor.qti.hardware.soter-provision
+ vendor/etc/init/vendor.qti.hardware.soter-service.rc
+@@ -1831,15 +1831,27 @@ system_ext/lib64/libmmrtpdecoder.so|7971b5de27f7105fd77a15e5fca5401ad8b878a6
+ system_ext/lib64/libmmrtpencoder.so|660417edcd28d0a89b87b34609fdb5f89856b8f5
+ system_ext/lib64/libwfdavenhancements.so|c460b1f585902fa1cc1bd4386b5017e252939526
+ system_ext/lib64/libwfdclient.so|8c24d161dace8c5f089574cca278072a72c3467c
+-system_ext/lib64/libwfdcommonutils.so|8ea632b424023b4facbbdadaf90fc30d5f2631e7
++system_ext/lib64/libwfdcommonutils.so|fa14089bc1353a025f3325e2a8a9118fe4573e6b|c15bbbdea8f97a53a797b18227d5c190b075d6ca
+ system_ext/lib64/libwfdconfigutils.so|2ba443281a75baf4c40a0bfcbfcd2db296405658
+ system_ext/lib64/libwfddisplayconfig.so|f83142f12c2aaef34178b4091d5e03cb563a31ad
+ system_ext/lib64/libwfdmminterface.so|e97b771999cc69a76a2918f014ac0aac8e0872c6
+ system_ext/lib64/libwfdmmsink.so|d2aa9d4663c4c2fbadcac91724167955ae6a3bac
+-system_ext/lib64/libwfdmmsrc_system.so|ab23a6ce749d1ecc9bef869fae0eb3a0e293d389|ab23a6ce749d1ecc9bef869fae0eb3a0e293d389
+-system_ext/lib64/libwfdnative.so;SYMLINK=system_ext/priv-app/WfdService/lib/arm64/libwfdnative.so|f3c438b50e32156d630cb2f6ba608104fe5be421
++# NOTE(athens): the pins of the two files below are inherited from this tree's
++# original dump (Xiaomi 17 Pro Max, see header) and do not match athens' own
++# dump. In extract_utils/module.py:957, when a line carries a fixup hash but the
++# extracted file hash does not match the pinned hash, extract-utils returns
++# MISMATCH *before* reaching the fixup call -- so the blob_fixup entries for
++# these two files in this directory's extract-files.py never ran. Repinning them
++# to athens' measured values (fixup hash measured after applying the fixup)
++# makes them execute:
++#   libwfdmmsrc_system.so  libaudioclient.so -> libaudiobase.so
++#   libwfdservice.so       add_needed(libaudiobase) + audio.common.types V4-cpp -> V5-cpp
++# The latter also resolves Soong's "depends on multiple versions of the same
++# aidl_interface: V4-cpp-source, V5-cpp-source" for libwfdservice.
++system_ext/lib64/libwfdmmsrc_system.so|2d9091a9eb7e88a69f081205c1117b2e3286f4d9|cb5d468df741ceaa47696a90bc94a43bb4cfa402
++system_ext/lib64/libwfdnative.so;SYMLINK=system_ext/priv-app/WfdService/lib/arm64/libwfdnative.so|31d003a63ef42573ff0675eb42f7eec25f2a2ee9|4b396c1696d5f6c9bfaba9c12084a045a1fdc79c
+ system_ext/lib64/libwfdrtsp.so|4595976a1897782e22fc7d519c7293d0a81b4d15
+-system_ext/lib64/libwfdservice.so|9450ceb1750849a7aca7e38d1203e1e0277c76b0|9450ceb1750849a7aca7e38d1203e1e0277c76b0
++system_ext/lib64/libwfdservice.so|ba23da3a50e6314f512b8a66f3d1233689928548|14ccb5f7c304e48ab95fb5b66b492abdc028d1a3
+ system_ext/lib64/libwfdsinksm.so|18fa4c0fed1b5bc4c34a5c29ed11f67891c54ad3
+ system_ext/lib64/libwfduibcinterface.so|1d0377b18ca2d204cb30c705cc5f7297308ba733
+ system_ext/lib64/libwfduibcsink.so|c3508c6b7bf37d0efa8c5b688faf8345b06a546b
+@@ -1847,7 +1859,7 @@ system_ext/lib64/libwfduibcsinkinterface.so|b6630e84f5596fbd08b9de4e519b3907e492
+ system_ext/lib64/libwfduibcsrc.so|94ab48fac2d95bb7ca7b3291166540304ea5fe97
+ system_ext/lib64/libwfduibcsrcinterface.so|8174319b25aedf98a5e33d9dc4f12b0ced90c07c
+ system_ext/lib64/vendor.qti.hardware.wifidisplaysession@1.0.so|b6b0026a1a839ef6345508e6f350ef1e99e5e7fd
+-system_ext/lib64/vendor.qti.hardware.wifidisplaysession_aidl-V2-ndk.so|5885489e48c606ae98307410cd0ccefdc01a363d
++system_ext/lib64/vendor.qti.hardware.wifidisplaysession_aidl-V1-ndk.so|58cd9358df40aa16ddf0e603b736c58588623b9e
+ system_ext/priv-app/WfdService/WfdService.apk|0fcb88dd5d08c0ee13a5683071926549077410b4
+ 
+ # WiFi Display (vendor)
+@@ -1887,7 +1899,7 @@ vendor/lib64/libwfduibcsinkinterface_vendor.so
+ vendor/lib64/libwfduibcsrc_vendor.so
+ vendor/lib64/libwfduibcsrcinterface_vendor.so
+ vendor/lib64/libwfdutils_proprietary.so
+-vendor/lib64/vendor.qti.hardware.wifidisplaysession_aidl-V1-ndk.so
++vendor/lib64/vendor.qti.hardware.wifidisplaysession_aidl-V1-ndk.so;MODULE_SUFFIX=_vendor
+ vendor/lib64/vendor.qti.hardware.wifidisplaysessionl@1.0-halimpl.so
+ vendor/lib64/libsvswcpu.so
+ vendor/lib64/libtensorflowlite_c_qcom.so
+diff --git a/compat/wfd_input.cpp b/compat/wfd_input.cpp
+new file mode 100644
+index 0000000..e385fdb
+--- /dev/null
++++ b/compat/wfd_input.cpp
+@@ -0,0 +1,21 @@
++// SPDX-License-Identifier: Apache-2.0
++// Preserve the old member-function ABI, including the implicit this argument.
++#include <input/Input.h>
++
++extern "C" void
++_ZN7android11MotionEvent10initializeEiijNS_2ui16LogicalDisplayIdENSt3__15arrayIhLm32EEEiiiiiiNS_20MotionClassificationERKNS1_9TransformEffffS9_llmPKNS_17PointerPropertiesEPKNS_13PointerCoordsE(
++        android::MotionEvent* self, int32_t id, int32_t deviceId, uint32_t source,
++        android::ui::LogicalDisplayId displayId, std::array<uint8_t, 32> hmac,
++        int32_t action, int32_t actionButton, int32_t flags, int32_t edgeFlags,
++        int32_t metaState, int32_t buttonState, android::MotionClassification classification,
++        const android::ui::Transform& transform, float xPrecision, float yPrecision,
++        float rawXCursorPosition, float rawYCursorPosition,
++        const android::ui::Transform& rawTransform, nsecs_t downTime, nsecs_t eventTime,
++        size_t pointerCount, const android::PointerProperties* pointerProperties,
++        const android::PointerCoords* pointerCoords) {
++    self->initialize(id, deviceId, source, displayId, hmac, action, actionButton,
++                     android::ftl::Flags<android::MotionFlag>{flags}, edgeFlags, metaState,
++                     buttonState, classification, transform, xPrecision, yPrecision,
++                     rawXCursorPosition, rawYCursorPosition, rawTransform, downTime, eventTime,
++                     pointerCount, pointerProperties, pointerCoords);
++}
+diff --git a/sepolicy/private/compat/202604/202604.ignore.cil b/sepolicy/private/compat/202604/202604.ignore.cil
+new file mode 100644
+index 0000000..0d1c636
+--- /dev/null
++++ b/sepolicy/private/compat/202604/202604.ignore.cil
+@@ -0,0 +1,10 @@
++;; new_objects - a collection of types that have been introduced that have no
++;;   analogue in older policy. Thus, we do not need to map these types to
++;;   previous ones. Add here to pass checkapi/treble compatibility tests.
++(type new_objects)
++(typeattribute new_objects)
++(typeattributeset new_objects
++  ( new_objects
++    hal_touchfeature_xiaomi_default
++    hal_touchfeature_xiaomi_default_exec
++    hal_touchfeature_xiaomi_service))

@@ -1,0 +1,25 @@
+diff --git a/volume_manager/PublicVolume.cpp b/volume_manager/PublicVolume.cpp
+index b04135fd07a99669ffd5967281eb509af4af8175..e3d6c01803913db5da91665ff2b86c7a1240dc59 100644
+--- a/volume_manager/PublicVolume.cpp
++++ b/volume_manager/PublicVolume.cpp
+@@ -31,6 +31,8 @@
+ #include <cutils/fs.h>
+ #include <private/android_filesystem_config.h>
+ 
++#include <algorithm>
++
+ #include <fcntl.h>
+ #include <stdlib.h>
+ #include <sys/mount.h>
+diff --git a/volume_manager/include/volume_manager/VolumeManager.h b/volume_manager/include/volume_manager/VolumeManager.h
+index c2cb8dde9b0c6adbd51bd8f69e7d76cd2caf1a3d..74d653b34d6ff04fef8f7dc22150e8b47fc6f3ea 100644
+--- a/volume_manager/include/volume_manager/VolumeManager.h
++++ b/volume_manager/include/volume_manager/VolumeManager.h
+@@ -25,6 +25,7 @@
+ #include <list>
+ #include <mutex>
+ #include <string>
++#include <vector>
+ 
+ struct selabel_handle;
+ class NetlinkManager;

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The parent applies rounded-corner insets; do not add them a second time. -->
+    <dimen name="status_bar_padding_start">0dp</dimen>
+    <dimen name="status_bar_padding_end">0dp</dimen>
+    <dimen name="rounded_corner_content_padding">24dp</dimen>
+    <dimen name="status_bar_padding_top">4dp</dimen>
+    <!-- Native xDpi=419.46286: 25400 microns per inch / xDpi. -->
+    <item name="pixel_pitch" format="float" type="dimen">60.55363</item>
+</resources>
