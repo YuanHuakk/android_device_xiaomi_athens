@@ -1,7 +1,3 @@
-## 本清单由 songyuan 清单派生（生成器 /tmp/gen/make_list.py），不是手写的。
-## 全部 105 条已逐条验证源路径存在于 athens dump；105 条的条目名经代号/型号替换并验证；
-## 从参考清单丢弃 32 条（附录有逐条记录），另追加 94 条 athens 专属条目。
-
 # ACDBs
 odm/etc/acdbdata/Mi/Ext_AiOff_fixed.eai
 odm/etc/acdbdata/Mi/Ext_fixed_v5.eai
@@ -1370,7 +1366,6 @@ odm/etc/surfaceflinger/dolby_vision.cfg
 odm/vendor/etc/dolby_vision.cfg
 odm/vendor/persist/display/dolby_vision.cfg
 
-# ⚠️ 本节条目在 athens 上全部不存在，已整体丢弃（附录有逐条记录）。
 
 # Fingerprint
 # Source V2 service is the sole IFingerprint/default provider. Keep stock
@@ -1391,8 +1386,6 @@ system_ext/framework/xiaomi-modem-common.jar
 # Kernel
 vendor/bin/init.kernel.post_boot-memory.sh
 
-# NFC —— 见文件末尾追加段的 NXP 服务栈。⚠️ 原参考清单此节的 5 条 ST54L 条目
-# 在 athens 上全部不存在，已整体丢弃（附录有逐条记录）。
 
 # Sensors
 odm/etc/sensors/config/chre_dynamic_sensors.json
@@ -1495,14 +1488,8 @@ odm/firmware/7_ringTone2_P_RTP.bin:vendor/etc/vibrator/primitive_effect_7.bin
 odm/firmware/8_ringTone3_P_RTP.bin:vendor/etc/vibrator/primitive_effect_8.bin
 odm/firmware/9_ringTone4_P_RTP.bin:vendor/etc/vibrator/primitive_effect_9.bin
 
-# NFC：这里只留通用的 NCI 配置。athens 的 NXP 专属栈（服务 / nfc_nci_nxp /
-# libnfc-nxp*.conf / 权限 XML）在文件末尾的追加段 —— songyuan 那份是 Thales
-# ST54L，整组在 athens 上不存在，已丢弃（附录有逐条记录）。
 odm/etc/libnfc-nci.conf
 
-# 设备专属族（面板 / 触摸 / 相机 / 传感器）：条目名已由 songyuan 改写为 athens，
-# 每处改写都经"替换后文件在 athens dump 中确实存在"验证，非机械改名。
-# 从公共清单搬来的条目：两边分区归属不同（公共清单按 vendor 收，本设备实测在 odm）。
 odm/etc/camera/Q11_wide_41.bin
 odm/etc/camera/SNSC_HPE_LBMF_Debanding.minn
 odm/etc/camera/SNSC_OV50X_LBMF_Debanding.minn
@@ -1717,21 +1704,9 @@ odm/lib64/vendor.qti.gnss-service.so
 
 
 # ============================================================================
-# 以下是 athens 专属条目，不在 songyuan 清单里，按类别分组说明取证依据。
 #
-# 归类判据（贯穿全文件）：参考清单是**按族挑选**的 —— 它挑了某族的 N 个成员，
-# 就说明这一族是 blob；athens 在同类里多出来的成员按同一判据纳入。
-# 反过来，如果某族在两份参考清单里一个都没有，那多半是源码构建产物，不纳入。
 # ============================================================================
 
-# ── 长焦 B 的 OIS 与模组 ────────────────────────────────────────────────────
-# 取证：参考清单收了 <代号>_{front,tele,ultra,wide}_a 的 sensor/sensormodule/tuned/
-# eeprom/actuator 全套，athens 另有 tele_b 一套（长焦 B 是 athens 独有的第二颗长焦）。
-# 另有两个 ois 模块：参考清单没有 com.qti.ois.*，但实施方案 §8.1 明确要求补回，
-# 且 athens 的 vendor/lib64/camera/components/com.mi.node.mioisverify.so 会去校验它们。
-# 注意：ois .so 内部不引用 odm/firmware/athens_tele_*_ois.*（字符串扫描零命中），
-# 那 8 个固件是按其"代号命名 + odm/firmware 属 blob 区"两条判据一并纳入的，
-# 属于**未经引用验证**的决策；若首编后确认无人读取，可整组删掉，成本仅为镜像体积。
 odm/lib64/camera/com.qti.sensor.athens_tele_b.so
 odm/lib64/camera/com.qti.sensormodule.athens_tele_b.bin
 odm/lib64/camera/com.qti.tuned.athens_tele_b.bin
@@ -1747,19 +1722,11 @@ odm/firmware/athens_tele_b_ois.coeff
 odm/firmware/athens_tele_b_ois.mem
 odm/firmware/athens_tele_b_ois.pher
 odm/firmware/athens_tele_b_ois.prog
-# mi_tuning：参考清单收了 <代号>_{front,tele,ultra,wide}_a.bin。
 odm/etc/camera/mi_tuning/athens_tele_b.bin
-# dcal 金标：参考清单收了 songyuan 的 2 个 com.xiaomi.dcal.*.golden，athens 有 3 个
-# 且按 t_01/t_07/u_10 命名（不是 songyuan 的 t4_10/u_01，替换规则不适用，故单列）。
 odm/etc/camera/com.xiaomi.dcal.w_07.t_01.golden
 odm/etc/camera/com.xiaomi.dcal.w_07.t_07.golden
 odm/etc/camera/com.xiaomi.dcal.w_07.u_10.golden
 
-# ── 显示：3DLUT 与第三代 zap 固件 ───────────────────────────────────────────
-# 取证：显示族是参考清单里覆盖最完整的一族（nn_*.bin 13/13、pq_* 2/2、vpu40_* 4/4、
-# asic_panel/asic_pcc/paneldata 全中）。3dlut9_* 是该族在 athens 上的额外成员
-# （3D LUT 色彩校准，与已全覆盖的 disp0 面板族配套）；gen8NNNN_zap.mbn 参考清单收了
-# 80000/80200 两个，athens 多出 80900 一个 —— "同族部分命中"是最强的纳入信号。
 odm/firmware/3dlut9_00000001.bin
 odm/firmware/3dlut9_00000002.bin
 odm/firmware/3dlut9_00000003.bin
@@ -1770,14 +1737,6 @@ odm/firmware/3dlut9_00000007.bin
 odm/firmware/3dlut9_00000008.bin
 odm/firmware/gen80900_zap.mbn
 
-# ── 传感器配置 ──────────────────────────────────────────────────────────────
-# 取证：参考清单把 {odm,vendor}/etc/sensors/config/ 当作整体收（songyuan 收 49/62）。
-# athens 多出的 13 个里，chm9600/qmc6309 是 athens 用的磁力计（songyuan 用 AKM 的
-# ak7323/ak991x，已在上面被丢弃 —— 硬件不同，不是命名差异）；sar/aod/pocket 等
-# 是 athens 自己的算法配置。
-# ⚠️ odm/etc/sensors/config/json.lst 是**跨平台超集登记表**（86 条），其中 28 条在
-#    athens 全盘和两份参考清单里都不存在，证明该表允许登记项缺失，HAL 会跳过。
-#    因此不要按 json.lst 反推清单。
 odm/etc/sensors/config/chm9600.json
 odm/etc/sensors/config/sm8850_chm9600.json
 odm/etc/sensors/config/sm8850_qmc6309_0.json
@@ -1791,8 +1750,6 @@ odm/etc/sensors/config/sns_sar_algo.json
 odm/etc/sensors/config/sns_sar_algo_1.json
 odm/etc/sensors/config/sns_screen_down.json
 odm/etc/sensors/config/oem_sar_algo_1.json
-# qsh_camera_* 是 QSH 侧相机传感器描述符，传感器名即 athens 的相机 sensor
-# （imx688/ov32c4c/s5kjn5）—— 按代号命名判据纳入。
 vendor/etc/sensors/config/qsh_camera_common.json
 vendor/etc/sensors/config/qsh_camera_common_sm8845.json
 vendor/etc/sensors/config/qsh_camera_imx688_6.json
@@ -1802,23 +1759,14 @@ vendor/etc/sensors/config/qsh_camera_ov32c4c_4_sm8845.json
 vendor/etc/sensors/config/qsh_camera_s5kjn5_3.json
 vendor/etc/sensors/config/qsh_camera_s5kjn5_3_actuator.json
 
-# ── NFC：athens 是 NXP，songyuan 是 Thales ST54L ───────────────────────────
-# 取证：参考清单**有**它自己的 NFC 服务整套（odm/bin/hw/android.hardware.nfc-service-st、
 # odm/etc/init/nfc-service-st.rc、odm/etc/libnfc-hal-st.conf、odm/etc/st54l_conf.txt、
-# odm/firmware/st54l_fw.bin），这 5 条在 athens 上全部不存在 —— 所以 athens 必须补
-# 自己那一套，否则 NFC 整个缺席。
-# 公共清单（sm8850-common）只提供 SN100/SN220/SN300 等**通用** NXP 配置，不含设备专属的
-# libnfc-nxp.conf / libnfc-nxp_RF.conf。依赖闭包取证：
 #   objdump -p android.hardware.nqnfc-service.nxp → NEEDED nfc_nci_nxp_snxxx_v2.so
-#   该服务的 strings         → /odm/etc/libnfc-nxp.conf、/odm/etc/libnfc-nxp_RF.conf
 odm/bin/hw/android.hardware.nqnfc-service.nxp
 odm/lib64/nfc_nci_nxp_snxxx_v2.so;MODULE_SUFFIX=_odm
 odm/etc/init/nfc2-service-nxp.rc
 # NFC/NXP are declared by configs/vintf/nfc-service-nxp.xml; eSE1 by common manifest_canoe.xml.
 odm/etc/libnfc-nxp.conf
 odm/etc/libnfc-nxp_RF.conf
-# 权限 XML：参考清单一条 permissions/ 都没有，但那是它的设备树自带；athens 的设备树
-# 没有 NFC 源码，不走这套 XML 的话 eSE/HCE/UICC 三个特性会在 PackageManager 里消失。
 odm/etc/permissions/android.hardware.nfc.xml
 odm/etc/permissions/android.hardware.nfc.ese.xml
 odm/etc/permissions/android.hardware.nfc.hce.xml
@@ -1830,27 +1778,12 @@ odm/etc/permissions/com.android.nfc_extras.xml
 odm/etc/permissions/com.nxp.mifare.xml
 
 # ── StrongBox / Weaver / AuthSecret（NXP）─────────────────────────────────
-# 取证：实施方案 §3 要求 athens 具备 AID 2910（StrongBox）、2911（Weaver）、
-# 2915（AuthSecret）。而 device/xiaomi/sm8850-common @634c55b 这个 fork 是面向
-# ST54/Thales 的 songyuan 的，把 NXP 分支摘掉了 —— 两份参考清单里
-# keymint/weaver/strongbox/ese/authsecret 全部 0 命中，所以这一族**没有任何模板可依**，
-# 只能按 §3 的显式要求补，并且必须补完整套（服务+rc+vintf+依赖库+权限 XML），
-# 否则 VINTF 校验会在开机时把这个 HAL 判为"声明了但没起来"。
-# 依赖闭包（objdump -p，逐条实测）：
 #   keymint3-service.strongbox.nxp → libjc_keymint3.nxp.so, libjc_keymint_transport_nxp.so
 #   weaver-service.nxp-qti         → ese_weaver.so, vendor.xiaomi.hardware.miauthsecretd-V1-ndk.so
 #   vendor.xiaomi.hardware.authsecretd → vendor.xiaomi.hardware.miauthsecretd-V1-ndk.so,
 #                                        vendor.xiaomi.hardware.oldcredential-V1-ndk.so
-# ⚠️ oldcredential 这条是首次 m nothing 报错后补的 —— 上面那份闭包**原本只写了
-#    miauthsecretd，把它漏了**，Soong 于是报
 #      "vendor.xiaomi.hardware.authsecretd" depends on undefined module
 #      "vendor.xiaomi.hardware.oldcredential-V1-ndk"
-#    重新对 blob 做 readelf -dW 才看到 NEEDED 第 7 条就是它。**两者不同分区**：原厂
-#    把 miauthsecretd 放 /odm/lib64、oldcredential 放 /vendor/lib64，不要为了"整齐"
-#    把它挪到 odm 段（odm→vendor 是允许的依赖方向，原厂设备就是这么装的）。
-# 反向确认**不需要**纳入：libcrypto/libcppbor/libkeymaster_portable/
-# android.hardware.security.keymint-V3-ndk 等同名依赖只出现在 vendor/lib64 且未覆盖，
-# 属 AOSP 源码构建产物。
 odm/bin/hw/android.hardware.security.keymint3-service.strongbox.nxp
 odm/bin/hw/android.hardware.weaver-service.nxp-qti
 odm/bin/hw/vendor.xiaomi.hardware.authsecretd
@@ -1863,17 +1796,8 @@ odm/lib64/vendor.xiaomi.hardware.miauthsecretd-V1-ndk.so
 vendor/lib64/vendor.xiaomi.hardware.oldcredential-V1-ndk.so
 odm/etc/init/android.hardware.security.keymint3-service.strongbox.nxp.rc
 odm/etc/init/android.hardware.weaver-service.nxp.rc
-# ⚠️ 下面两条是**审计补入**，不是一开始就想起来的（记在这里以免又被"优化"掉）：
-# 实施方案 §9.4 要求每个 HAL 对齐五项（实现二进制 / init rc / VINTF 实例 / AID / SELinux domain）。
-# 按 manifest 反查时发现 authsecretd 这一条只有二进制和库、**rc 与 manifest 都漏了**，
-# 而它的 rc 里带 `interface aidl ...IMIAuthSecret/default`、`...ICpaceService/default` 两行 ——
-# init 要靠 manifest 做接口校验与启动排序，缺了会失败。逐条取证：
 #   odm/etc/init/vendor.xiaomi.hardware.authsecretd.rc:1   service miweaver_hal_service /odm/bin/hw/vendor.xiaomi.hardware.authsecretd
 #   odm/etc/init/vendor.xiaomi.hardware.authsecretd.rc:7-8 interface aidl vendor.xiaomi.hardware.miauthsecretd.{IMIAuthSecret,ICpaceService}/default
-#   odm/etc/vintf/manifest/vendor.xiaomi.hardware.miauthsecretd.xml   声明 miauthsecretd 与 oldcredential 两组
-# 该 manifest 声明 oldcredential 不是多写：strings 实测二进制里有 OldCredentialServiceImpl 全套
-# （createInstance / deleteOldCredential / Init / DeInit），确实由它提供。
-# 参考清单没收这两条 —— 因为 songyuan 走 Thales，整个 NXP 分支都不存在，不是"参考认为不需要"。
 odm/etc/init/vendor.xiaomi.hardware.authsecretd.rc
 odm/etc/vintf/manifest/vendor.xiaomi.hardware.miauthsecretd.xml
 odm/etc/vintf/manifest/android.hardware.security.keymint3-service.strongbox.nxp.xml
@@ -1881,16 +1805,9 @@ odm/etc/vintf/manifest/android.hardware.security.sharedsecret3-service.strongbox
 odm/etc/vintf/manifest/android.hardware.weaver-service.nxp.xml
 odm/etc/permissions/android.hardware.hardware_keystore.jc-strongbox-keymint3.nxp.xml
 
-# ── 被已发布二进制直接引用的配置与库 ───────────────────────────────────────
-# 取证方法：把清单里所有二进制 strings 抽出来建索引（740 万行），再拿 dump 里未覆盖的
-# 文件反查"有没有人引用我"。odm/ 下 637 个未覆盖文件里只有 12 个命中，逐个核对后
-# 剔除 2 个假阳性（odm/etc/build.prop、odm/etc/group 是构建期生成的，不该当 blob 收），
-# 剩下 10 个加上与它们同族的 3 个 volume/strategy 配置，列在这里。
-# 引用方逐条：
 #   FM_CAM.bin                          ← libfcsam.so
 #   audio_module_config_primary.xml      ← libaudiocorehal.qti.so
 #   sku_canoe_qssi/audio_policy_conf.xml ← libaudiocorehal.default.so
-#   spk_cal_silence.wav                  ← libtfacal.so（TFA 校准静音段）
 #   audio_effects_config.xml             ← libaudioeffecthal.qti.so
 #   audio_policy_engine_configuration_mi.xml ← libaudiocorehal.default.so
 #   barrage_v3.tflite                    ← libframecapturemanager.so
@@ -1902,8 +1819,6 @@ odm/etc/audio/sku_canoe_qssi/audio_policy_configuration.xml
 odm/etc/audio/spk_cal_silence.wav
 odm/etc/audio_effects_config.xml
 odm/etc/audio_policy_engine_configuration_mi.xml
-# 后 3 个是同一组配置的其余成员，由 configuration_mi.xml 内部按路径引用（不是
-# dlopen，所以 strings 索引里看不到）；整组一起收，避免只收一半。
 odm/etc/audio_policy_engine_default_stream_volumes_mi.xml
 odm/etc/audio_policy_engine_product_strategies_mi.xml
 odm/etc/audio_policy_engine_stream_volumes_mi.xml
@@ -1914,16 +1829,10 @@ odm/lib64/libtical.so
 
 
 # ===========================================================================
-# 附录：从参考清单中**丢弃**的条目（共 32 条）
 # ===========================================================================
-# 每条都经过"源路径在 athens dump 中不存在，且套用代号/型号替换规则后仍不存在"
-# 的判定。列在这里是为了让后续排查有据可查 —— 缺某个功能时先来这里对，
-# 而不是重新做一遍全量比对。
 #
-# 【athens 有 libtfacal.so 与 init.tfa.rc，但没有该校准文件（运行时生成）】1 条
 #   odm/firmware/tfa98xx.cnt
 #
-# 【athens 没有融合相机子系统与该风格配置：odm/etc/camera/fusion_models/ 整目录不存在】11 条
 #   odm/etc/camera/fusion_mecp.bin
 #   odm/etc/camera/fusion_models/fusion_cache
 #   odm/etc/camera/fusion_models/fusion_model
@@ -1936,36 +1845,30 @@ odm/lib64/libtical.so
 #   odm/lib64/camera/plugins/com.xiaomi.plugin.fusion.so
 #   odm/lib64/libwa_opticalzoom_fusion.so
 #
-# 【athens 没有这些传感器件/配置：磁力计是 CHM9600 与 QMC6309，见追加段】5 条
 #   odm/etc/sensors/config/ak7323.json
 #   odm/etc/sensors/config/oem_sar_algo.json
 #   odm/etc/sensors/config/oem_sar_algo_cn.json
 #   odm/etc/sensors/config/sm8850_ak7323.json
 #   odm/etc/sensors/config/sm8850_ak991x_0.json
 #
-# 【songyuan 自己的热控档位（含 thermal-gl- 变体）；athens 的档位是 huanji/xingtie/yuanshen 另一套】4 条
 #   odm/etc/thermal-cheji.conf
 #   odm/etc/thermal-danmu.conf
 #   odm/etc/thermal-gl-cheji.conf
 #   odm/etc/thermal-gl-danmu.conf
 #
-# 【Thales ST54L eSE 栈：athens 用 NXP（nqnfc-service.nxp + nfc_nci_nxp_snxxx_v2.so）】5 条
 #   odm/bin/hw/android.hardware.nfc-service-st
 #   odm/etc/init/nfc-service-st.rc
 #   odm/etc/libnfc-hal-st.conf
 #   odm/etc/st54l_conf.txt
 #   odm/firmware/st54l_fw.bin
 #
-# 【金标文件按 t_01/t_07/u_10 命名，与 songyuan 的 t4_10/u_01 不是同一组】2 条
 #   odm/etc/camera/com.xiaomi.dcal.w_07.t4_10.golden
 #   odm/etc/camera/com.xiaomi.dcal.w_07.u_01.golden
 #
-# 【athens 的 mi_ext/product/priv-app/ 为空；eSIM LPA 走别的路径】3 条
 #   mi_ext/product/etc/permissions/privapp-permissions-miext.xml
 #   mi_ext/product/priv-app/EuiccGoogle/EuiccGoogle.apk
 #   mi_ext/product/priv-app/MIUIEsimLPA/MIUIEsimLPA.apk
 #
-# 【athens 的 CHRE 启动方式不同（athens 无此 rc）】1 条
 #   odm/etc/init/android.hardware.contexthub-service.qmi.rc
 #
 

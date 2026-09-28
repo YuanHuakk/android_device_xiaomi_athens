@@ -62,6 +62,33 @@ index 25ec09d1fecc6f7e8a4645b8aa5fde062737614a..9cafa4c56f47385a0fdd3d44d29459d9
  
  PRODUCT_COPY_FILES += \
      frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml
+diff --git a/compat/wfd_input.cpp b/compat/wfd_input.cpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..e385fdb44e0845ed452c689c86f14f77b3e80f26
+--- /dev/null
++++ b/compat/wfd_input.cpp
+@@ -0,0 +1,21 @@
++// SPDX-License-Identifier: Apache-2.0
++// Preserve the old member-function ABI, including the implicit this argument.
++#include <input/Input.h>
++
++extern "C" void
++_ZN7android11MotionEvent10initializeEiijNS_2ui16LogicalDisplayIdENSt3__15arrayIhLm32EEEiiiiiiNS_20MotionClassificationERKNS1_9TransformEffffS9_llmPKNS_17PointerPropertiesEPKNS_13PointerCoordsE(
++        android::MotionEvent* self, int32_t id, int32_t deviceId, uint32_t source,
++        android::ui::LogicalDisplayId displayId, std::array<uint8_t, 32> hmac,
++        int32_t action, int32_t actionButton, int32_t flags, int32_t edgeFlags,
++        int32_t metaState, int32_t buttonState, android::MotionClassification classification,
++        const android::ui::Transform& transform, float xPrecision, float yPrecision,
++        float rawXCursorPosition, float rawYCursorPosition,
++        const android::ui::Transform& rawTransform, nsecs_t downTime, nsecs_t eventTime,
++        size_t pointerCount, const android::PointerProperties* pointerProperties,
++        const android::PointerCoords* pointerCoords) {
++    self->initialize(id, deviceId, source, displayId, hmac, action, actionButton,
++                     android::ftl::Flags<android::MotionFlag>{flags}, edgeFlags, metaState,
++                     buttonState, classification, transform, xPrecision, yPrecision,
++                     rawXCursorPosition, rawYCursorPosition, rawTransform, downTime, eventTime,
++                     pointerCount, pointerProperties, pointerCoords);
++}
 diff --git a/configs/properties/vendor.prop b/configs/properties/vendor.prop
 index 618f7d6b831ac7336bca45d5466b592f0e31c9ad..4b5712b5e24fcdd1d6ab815b82ba7a072cdea952 100644
 --- a/configs/properties/vendor.prop
@@ -76,7 +103,7 @@ index 618f7d6b831ac7336bca45d5466b592f0e31c9ad..4b5712b5e24fcdd1d6ab815b82ba7a07
  persist.sys.fflag.override.settings_bluetooth_hearing_aid=true
  persist.vendor.bt.aac_frm_ctl.enabled=true
 diff --git a/extract-files.py b/extract-files.py
-index d8680e2eec965bf35f11348df96580162a08cf22..f3ad1b3acef60d0a87888d399ed5f46db9bcc0b2 100755
+index d8680e2eec965bf35f11348df96580162a08cf22..f827f9eae72120ba9ebbfb1e482dccb8362092c4 100755
 --- a/extract-files.py
 +++ b/extract-files.py
 @@ -37,6 +37,7 @@ lib_fixups: lib_fixups_user_type = {
@@ -87,26 +114,24 @@ index d8680e2eec965bf35f11348df96580162a08cf22..f3ad1b3acef60d0a87888d399ed5f46d
          'vendor.qti.qccsyshal_aidl-V1-ndk',
          'vendor.qti.qccvndhal_aidl-V1-ndk',
      ): lib_fixup_vendor_suffix,
-@@ -65,6 +66,9 @@ blob_fixups: blob_fixups_user_type = {
+@@ -65,6 +66,8 @@ blob_fixups: blob_fixups_user_type = {
          'vendor/bin/poweropt-service',
          'vendor/bin/poweropt-service',
          'vendor/bin/qsap_mpamsvc',
-+        # athens: 实测该 blob NEEDED libtinyxml2.so，而它只在公共清单里，所以这条
-+        # fixup 必须落在公共树（实施方案 §五 6）
++        # athens audio and display blobs require the versioned tinyxml2 library.
 +        'vendor/lib64/hw/libaudiocorehal.qti.so',
          'vendor/lib64/hw/libaudioeffecthal.qti.so',
          'vendor/lib64/libaodoptfeature.so',
          'vendor/lib64/libaudiocloudctrl.so',
-@@ -76,6 +80,8 @@ blob_fixups: blob_fixups_user_type = {
+@@ -76,6 +79,7 @@ blob_fixups: blob_fixups_user_type = {
          'vendor/lib64/libpowercallback.so',
          'vendor/lib64/libpowercore.so',
          'vendor/lib64/libpsmoptfeature.so',
-+        # athens: 同上（实测 NEEDED libtinyxml2.so，且只在公共清单里）
 +        'vendor/lib64/libsdmcore.so',
          'vendor/lib64/libstandbyfeature.so',
          'vendor/lib64/libvideooptfeature.so',
          'vendor/lib64/libxlog.so',
-@@ -128,8 +134,17 @@ blob_fixups: blob_fixups_user_type = {
+@@ -128,8 +132,17 @@ blob_fixups: blob_fixups_user_type = {
          'vendor/etc/seccomp_policy/syshealthmon.policy'
      ): blob_fixup()
          .add_line_if_missing('lseek: 1'),
@@ -206,36 +231,9 @@ index 5384fd3ab5d90801ab8995935437dc81153256c1..72ddc3307193696cee7f24389f81f465
  vendor/lib64/vendor.qti.hardware.wifidisplaysessionl@1.0-halimpl.so
  vendor/lib64/libsvswcpu.so
  vendor/lib64/libtensorflowlite_c_qcom.so
-diff --git a/compat/wfd_input.cpp b/compat/wfd_input.cpp
-new file mode 100644
-index 0000000..e385fdb
---- /dev/null
-+++ b/compat/wfd_input.cpp
-@@ -0,0 +1,21 @@
-+// SPDX-License-Identifier: Apache-2.0
-+// Preserve the old member-function ABI, including the implicit this argument.
-+#include <input/Input.h>
-+
-+extern "C" void
-+_ZN7android11MotionEvent10initializeEiijNS_2ui16LogicalDisplayIdENSt3__15arrayIhLm32EEEiiiiiiNS_20MotionClassificationERKNS1_9TransformEffffS9_llmPKNS_17PointerPropertiesEPKNS_13PointerCoordsE(
-+        android::MotionEvent* self, int32_t id, int32_t deviceId, uint32_t source,
-+        android::ui::LogicalDisplayId displayId, std::array<uint8_t, 32> hmac,
-+        int32_t action, int32_t actionButton, int32_t flags, int32_t edgeFlags,
-+        int32_t metaState, int32_t buttonState, android::MotionClassification classification,
-+        const android::ui::Transform& transform, float xPrecision, float yPrecision,
-+        float rawXCursorPosition, float rawYCursorPosition,
-+        const android::ui::Transform& rawTransform, nsecs_t downTime, nsecs_t eventTime,
-+        size_t pointerCount, const android::PointerProperties* pointerProperties,
-+        const android::PointerCoords* pointerCoords) {
-+    self->initialize(id, deviceId, source, displayId, hmac, action, actionButton,
-+                     android::ftl::Flags<android::MotionFlag>{flags}, edgeFlags, metaState,
-+                     buttonState, classification, transform, xPrecision, yPrecision,
-+                     rawXCursorPosition, rawYCursorPosition, rawTransform, downTime, eventTime,
-+                     pointerCount, pointerProperties, pointerCoords);
-+}
 diff --git a/sepolicy/private/compat/202604/202604.ignore.cil b/sepolicy/private/compat/202604/202604.ignore.cil
 new file mode 100644
-index 0000000..0d1c636
+index 0000000000000000000000000000000000000000..0d1c6362c593d95bbe6059df846e204af6d66ac0
 --- /dev/null
 +++ b/sepolicy/private/compat/202604/202604.ignore.cil
 @@ -0,0 +1,10 @@

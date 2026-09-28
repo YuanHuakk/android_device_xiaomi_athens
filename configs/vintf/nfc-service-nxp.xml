@@ -1,25 +1,8 @@
 <!--
     Copyright (C) 2026 The Android Open Source Project
     SPDX-License-Identifier: Apache-2.0
-
-    athens 的 NFC 栈。
-
-    照原厂 odm/etc/vintf/manifest/nfc2-service-nxp.xml 裁剪，不是照抄 songyuan 的
-    nfc-service-st.xml —— 两台机器的 NFC 控制器厂商不同：
-      songyuan   ST54L（Thales applet，服务 android.hardware.nfc-service-st）
-      athens     NXP（服务 vendor/bin/hw/...nxp，另有 vendor.nxp.nxpnfc_aidl）
-
-    删掉了原厂那份里的 android.hardware.secure_element / ISecureElement/eSE1：
-    sm8850-common 的 configs/vintf/manifest_canoe.xml 已经声明了同一个 fqname，
-    重复声明会被 VINTF 判为冲突。这与 songyuan 的裁剪理由相同，但保留下来的 HAL
-    不同 —— 公共树没有声明 vendor.nxp.nxpnfc_aidl，那一项只能由设备树补。
-
-    实测（2026-09-27）：公共树的 configs/vintf/ 里
-      android.hardware.secure_element   → 有（manifest_canoe.xml）
-      android.hardware.nfc              → 无
-      vendor.nxp.nxpnfc_aidl            → 无
-    target-level 沿用原厂值 202504，与 manifest_canoe.xml 一致。
 -->
+<!-- The common manifest already provides ISecureElement/eSE1. -->
 <manifest version="9.0" type="device" target-level="202504">
     <hal format="aidl">
         <name>android.hardware.nfc</name>

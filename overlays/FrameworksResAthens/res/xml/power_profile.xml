@@ -3,112 +3,27 @@
     Copyright (C) 2026 The Android Open Source Project
     SPDX-License-Identifier: Apache-2.0
 -->
-<!--
-    athens 的 power_profile：覆盖 framework-res 的 res/xml/power_profile.xml（RRO）。
 
-    为什么必须自带一份
-    =============================================================================
-    athens 原厂 framework-res.apk 里的这份文件是**结构性 stub**，不是真值。
-    aapt2 dump resources 实测：19 项恒为 0.1、16 项恒为 0，
-    cpu.clusters.cores 只有 1 个簇且频率表只有一条 400MHz，battery.capacity=1000
-    （这台机器实际是 5000）。
-
-    原因：MIUI 不用 AOSP 的 BatteryStats 功耗模型，所以小米从不维护这个文件。
-    照抄原厂等于让 PixelOS 的电池统计退化成"单簇 400MHz / 1000mAh"，比不覆盖还差。
-
-    framework 侧怎么消费（源码取证，决定下列字段名对错）
-    =============================================================================
-    frameworks/base/core/java/com/android/internal/os/PowerProfile.java
-
-      :495  CPU_PER_CLUSTER_CORE_COUNT = "cpu.clusters.cores"    入口，必须是 <array>
-      :497  CPU_CORE_SPEED_PREFIX      = "cpu.core_speeds.cluster"
-      :498  CPU_CORE_POWER_PREFIX      = "cpu.core_power.cluster"
-      :563  注释 "Legacy power_profile.xml" 分支：未提供 scaling_policy_* 时，
-            框架从 cpu.clusters.cores 推导 policy，用 cpu.core_power.clusterN 作步进功耗。
-            本文件即走该分支，在 Android 17 上依然有效。
-
-    ⚠️ 绝对不要添加 cpu.power_brackets.policy* 系列。
-       PowerProfile.java:616-619 明确：anyBracketsSpecified && !allBracketsSpecified
-       时抛 RuntimeException("Power brackets should be specified for all scaling
-       policies or none")。只给一个簇写 brackets 会让 system_server 启动即崩。
-
-    取值可信度标记
-    =============================================================================
-      【实测】  athens 自己的固件里有直接证据
-      【同平台】canoe 平台或同 SoC 的参考值，是物理上最接近的可得值，
-                但**未在 athens 上标定**，属于实施方案 §9.5 的"待测参数"
-
-    标定方法（真机，root）：
-      CPU 频率表  cat /sys/devices/system/cpu/cpufreq/policy{0,6}/scaling_available_frequencies
-      CPU 功耗    需外接功率计逐档测；或先用下面【同平台】的曲线跑电池统计，
-                  与 MIUI 下的实际耗电曲线对照后再修
-      屏幕功耗    同上，screen.on / screen.full 需要分别在最低/最高亮度下测
--->
+<!-- CPU frequencies and battery capacity are device-specific.
+     Power estimates use canoe reference values and need device calibration. -->
 <device name="Android">
 
     <item name="none">0</item>
 
-    <!--
-        AOD（息屏显示）功耗。athens 支持 AOD —— 公共树 FrameworkResOverlayXiaomi 里
-        config_dozeAlwaysOnDisplayAvailable=true，且 DTBO 面板节点带 mi,doze-hbm-dbv-level=1100
-        与 mi,doze-lbm-dbv-level，是真实的 AOD 硬件通路。
 
-        【待测】此值原样取自 AOSP 默认 power_profile.xml（0.1），**未在 athens 上标定**。
-        它几乎肯定是占位值：0.1 与「屏幕关闭时额外多耗多少 mA」的物理量级对不上。
-
-        ⚠️ 为什么必须显式写出来而不是省略：RRO 覆盖 res/xml/power_profile.xml 是
-           **整文件替换**，不是逐项合并。省略任何 AOSP 默认文件里存在的字段，
-           框架都会读到 0，而不会回退到默认值。
-        标定方法：真机开 AOD 静置，用 dumpsys batterystats 的 screen 项反推。
-    -->
     <item name="ambient.on.display0">0.1</item>
 
-    <!--
-        屏幕功耗（mA）。【同平台】沿用 canoe 参考值，未在 athens 上标定。
 
-        ⚠️ athens 面板与参考机型不同，这一组最需要实测复核。
-        已知 athens 面板参数（DTBO /fragment@232/__overlay__/qcom,mdss_dsi_athens_42_0d_0a_dsc_cmd）：
-          qcom,mdss-dsi-panel-peak-brightness   = 32000000
-          qcom,mdss-dsi-bl-max-level            = 16383
-          qcom,mdss-dsi-bl-min-level            = 7
-          qcom,mdss-brightness-init-level       = 1315
-          mi,max-brightness-normal              = 5090
-          mi,mdss-fac-brightness-max-level      = 7800
-          mi,doze-hbm-dbv-level                 = 1100
-        这些是**背光档位**，不能直接换算成 mA，只用于标定时确定测试点。
-    -->
     <item name="screen.on.display0">69.02</item>
     <item name="screen.full.display0">327.45</item>
 
-    <!--
-        CPU 拓扑。【实测】两个独立来源一致：
 
-        来源 1（设备树）DTBO 的 cpu 节点：cpu@0/100/200/300/400/500 共 6 个，
-               cpu@10000/10100 共 2 个。
-        来源 2（内核配置）vendor/bin/init.kernel.post_boot-canoe_default_6_2.sh
-               操作 /sys/devices/system/cpu/cpufreq/policy0 与 policy6 ——
-               policy0 覆盖 cpu0..cpu5，policy6 从 cpu6 起，即 6 + 2。
-               （脚本名里的 "_6_2" 也是同一件事）
-
-        注意 Prime 簇在 policy6（即 cpu6/cpu7），不是在前面。
-    -->
     <array name="cpu.clusters.cores">
         <value>6</value>
         <value>2</value>
     </array>
 
-    <!--
-        cluster0 = 6 个 performance 核（cpu0..cpu5），共 28 档。
 
-        频率表【同平台】：取自 canoe 平台的完整 OPP 表，并经 athens 自身数据交叉验证 ——
-        athens post_boot 脚本 :189 写 policy0/walt/zone_max_util_pct 时列举的频率
-            691200 883200 1113600 1228800 1440000 1670400 1785600 1996800 2745600 2899200
-        全部出现在下表内，无一例外；且 :193 单独写入的 2611200 同样在表内
-        （它是 Game Turbo 关心的子集，故未出现在 :189 那一行里）。
-
-        ⚠️ zone_max_util_pct 是「频率 利用率」交替配对格式，:189 行末尾的 80 是阈值
-           不是频率 —— 不能直接把那一行当作完整频率表。
-    -->
     <array name="cpu.core_speeds.cluster0">
         <value>384000</value>
         <value>537600</value>
@@ -140,7 +55,7 @@
         <value>3628800</value>
     </array>
 
-    <!-- 每一档对应的单核功耗。【同平台】未在 athens 上标定。元素个数必须与上面的频率表一致。 -->
+
     <array name="cpu.core_power.cluster0">
         <value>125.43</value>
         <value>137.24</value>
@@ -172,13 +87,7 @@
         <value>1785.3</value>
     </array>
 
-    <!--
-        cluster1 = 2 个 Prime 核（cpu6/cpu7），共 26 档。
 
-        频率表【同平台】+ 交叉验证：athens post_boot :190 写 policy6 时列举的
-            883200 1017600 1132800 1267200 1382400 1497600 1632000 1977600 2227200 2880000
-        全部在下表内。
-    -->
     <array name="cpu.core_speeds.cluster1">
         <value>768000</value>
         <value>883200</value>
@@ -208,7 +117,7 @@
         <value>4608000</value>
     </array>
 
-    <!-- 【同平台】未在 athens 上标定。元素个数必须与上面的频率表一致。 -->
+
     <array name="cpu.core_power.cluster1">
         <value>304.36</value>
         <value>333.41</value>
@@ -242,19 +151,10 @@
     <item name="cpu.idle">7.44</item>
     <item name="cpu.suspend">0</item>
 
-    <!--
-        电池容量（mAh）。【实测】
 
-        来源：product/etc/device_features/athens.xml
-              <string name="battery_capacity_typ">5000</string>
-              （小米官方机型特性文件，注释原文 "battery capacity typ of the device"）
-
-        ⚠️ 不要照抄参考谱系的值：songyuan 是 8050（K100 Pro Max 是大电池机型）
-           而 athens 是 5000。这正是 device.mk 开头警告的那类"看着像通用值其实逐机型"。
-    -->
     <item name="battery.capacity">5000</item>
 
-    <!-- 以下几组【同平台】沿用 canoe 参考值，未在 athens 上标定。 -->
+
     <item name="wifi.on">1.07</item>
     <item name="wifi.active">355.21</item>
     <item name="wifi.scan">27.08</item>
@@ -266,7 +166,7 @@
     <item name="radio.active">236.58</item>
     <item name="radio.scanning">51.38</item>
 
-    <!-- athens 是双卡机型（device_features: config_num_physical_slots 语义一致），故两个值。 -->
+
     <array name="radio.on">
         <value>1.79</value>
         <value>1.79</value>

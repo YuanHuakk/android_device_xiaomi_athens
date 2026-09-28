@@ -1,20 +1,7 @@
-//
 // Copyright (C) 2026 The Android Open Source Project
-//
 // SPDX-License-Identifier: Apache-2.0
-//
 
-// athens 机型专属的 framework-res 覆盖。
-//
-// 为什么挂在设备树而不是 sm8850-common/overlays/
-// -----------------------------------------------------------------------------
-// 公共树那份（FrameworkResOverlayXiaomi）覆盖的是**同 SoC 通用**的值
-// （VoLTE/自动亮度/刷新率/colorspace…），改动会外溢到 songyuan 等兄弟机型。
-// 本 overlay 覆盖的是**逐机型取证**的值（CPU 簇数、频率表、电池容量），
-// 只对 athens 成立，所以必须留在设备树。
 runtime_resource_overlay {
     name: "FrameworksResAthens",
-    // 与公共树保持一致落到 /odm/overlay/。分区只影响解析顺序，
-    // 真正决定胜负的是 AndroidManifest 里的 priority（见该文件注释）。
     device_specific: true,
 }

@@ -1,39 +1,16 @@
-# athens 的原厂 odm 属性 —— 取值依据全部来自 athens 自己的原厂包，
-# 行号是原厂 odm/etc/build.prop 里的行号，可逐条复核。
-#
-# 为什么需要这个文件
-# -----------------------------------------------------------------------------
-# 原厂 odm/etc/build.prop **不作为 blob 提取**（songyuan 与 sm8850-common 两份
-# 参考清单都不提它）。/odm/etc/build.prop 是由构建从 TARGET_ODM_PROP 生成的，
-# 所以原厂那 478 行里的机型相关值不搬过来就会丢。
-#
-# 丢了的后果是**完全静默**的：屏幕分辨率、屏下指纹位置、传感器标定全部回落到
-# 公共树的默认值，不报错、不影响开机，只是亮度曲线、指纹热区、分辨率全不对。
-#
-# 凡公共树（sm8850-common/configs/properties/）已覆盖且值相同的，这里不重复。
 
-# ── 显示 ──────────────────────────────────────────────────────────────────
-# 原厂 :247
+
+# Display
 persist.sys.miui_resolution=1156,2510,480
 
-# ── 触摸 ──────────────────────────────────────────────────────────────────
-# 原厂 :262。与 songyuan 同为 247，但这台是同型号触摸 IC，非巧合也非可继承项。
+# Touch
 ro.vendor.touchfeature.type=247
 
-# ── 传感器 ────────────────────────────────────────────────────────────────
-# 原厂 :61 / :69
-# 注：persist.vendor.sensor.mischeck=true 公共树里已有一份且值相同，故不重复。
+# Sensors
 ro.vendor.sensor.maxbrightness=7800
 ro.vendor.proxcal.factor=2.82
 
-# ── 屏下指纹 FOD ──────────────────────────────────────────────────────────
-# 原厂 :448-456 / :162 / :243
-#
-# ⚠️ location / size / us.target 三个值是**逐机型标定**的：
-#     songyuan  525,1955   150,150   517,1939,683,2121
-#     athens    499,1826   158,158   495,1814,661,1996
-#   照抄 songyuan 的会让指纹热区整体偏到屏幕外，表现是"指纹完全按不动"，
-#   而且在亮屏状态下看起来一切正常。
+# Fingerprint
 ro.hardware.fp.fod=true
 ro.hardware.fp.fod.c=true
 ro.hardware.fp.fod.touch.ctl.version=2.0
@@ -44,33 +21,13 @@ persist.vendor.sys.fp.fod.size.width_height=158,158
 persist.vendor.sys.fp.fod.us.target=495,1814,661,1996
 persist.vendor.sys.fp.fod.slide=true
 
-# Retain stock feature values; true must not be interpreted as disabling them.
 ro.hardware.fp.mievent=true
 ro.hardware.fp.anti_auth_inpocket=true
 
-# ── 产品标识 ──────────────────────────────────────────────────────────────
-# 原厂 :5-11 里只有下面两个是小米专有、构建不会生成的。
-# 其余 ro.product.odm.{brand,device,manufacturer,model,name} 由 lineage_athens.mk
-# 的 PRODUCT_* 派生，在这里重复声明会与构建产物冲突。
-# 原厂 :10 的 marketname 是 REDMI K100 Pro（不是 songyuan 的 K100 Pro Max）。
+# Device identity
 ro.product.odm.marketname=REDMI K100 Pro
 ro.product.odm.cert=M511CD
 
-# ── 未移植：区域变体 ──────────────────────────────────────────────────────
-# 原厂 odm/etc/build.prop:33 是
-#   import /odm/etc/${ro.boot.product.hardware.sku}_${ro.boot.ptcountrycode}_build.prop
-# 由此加载 odm/etc/athens_{jp,ru,tr}_build.prop，把机型改成 POCO F9 Pro
-# （ro.product.odm.name=athens_jp、model=2607APCA5G、marketname=POCO F9 Pro）。
-#
-# 不移植。那三个文件（823 B 各）除产品名外只有 ro.*_for_attestation 与
-# ro.{odm,vendor}.build.fingerprint，都是给 Play Integrity 认证用的；解锁 BL 的
-# LineageOS 本来就过不了认证，移植它们只会让设备报一个假的 POCO 身份。
-# 本 ROM 只有一个产品身份：REDMI K100 Pro（见 lineage_athens.mk）。
-#
-# ⚠️ 机制与 songyuan 不同：songyuan 用 ro.boot.hwc + /odm/etc/odm_${hwc}.prop，
-#    athens 用 ro.boot.product.hardware.sku + ro.boot.ptcountrycode。两者不通用。
-
-# Source fingerprint HAL: match stock sensor ID and measured native-pixel geometry.
 persist.vendor.fingerprint.sensor_id=5
 persist.vendor.fingerprint.sensor_location=578|1905|79
 persist.vendor.fingerprint.udfps.display_touch=false

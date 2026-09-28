@@ -1,29 +1,23 @@
-//
 // Copyright (C) 2026 The LineageOS Project
-//
 // SPDX-License-Identifier: Apache-2.0
-//
 
 soong_namespace {
 }
 
-// The platform-signed APK is the exact build validated on athens. Preserve its
-// dex, JNI libraries and signature rather than rewriting it during the ROM build.
 android_app_import {
     name: "MiuiCameraAthens",
     apk: "camera/MiuiCamera.apk",
     filename: "MiuiCamera.apk",
     system_ext_specific: true,
+    // Keep the locally signed APK unchanged.
     preprocessed: true,
-    // Stock declares optional HyperOS libraries absent from AOSP. Its tested
-    // fallback works without them; let ART resolve the installed optional libs.
+    // HyperOS libraries are optional and absent from AOSP.
     enforce_uses_libs: false,
     dex_preopt: {
         enabled: false,
     },
 }
 
-// libhardware searches the .default.so name; keep the stock filename as well.
 install_symlink {
     name: "fingerprint.goodix_us2.default_symlink",
     device_specific: true,

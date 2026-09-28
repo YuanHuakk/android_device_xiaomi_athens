@@ -92,3 +92,13 @@ python3 device/xiaomi/athens/tools/export-candidate.py \
 
 原工作区的 r12 已编译通过。这份源码整理还没有从空目录完整重编；内核输入目前仍需
 手动准备，见 [KERNEL.md](KERNEL.md)。
+
+## 修改代码后
+
+```bash
+ruff check .
+ruff format --check .
+python3 -m unittest discover -s tests -v
+```
+
+Python 使用四空格缩进。注释说明依赖、顺序和兼容原因；排查过程留在问题记录里。

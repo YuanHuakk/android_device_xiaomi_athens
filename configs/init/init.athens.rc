@@ -4,28 +4,4 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# 有线反向快充。
-#
-# 原厂通过 micharge 应用开关这个功能，我们不装它。
-#
-# ⚠️ 首版（P3）**不**开机自动置 1 —— 实施方案 §9.5 的要求：取消这项未经实机功能
-#    验收的自动启用，后续通过**用户可控制的入口**与驱动条件接入。
-#    理由不是"这行会出事"，而是它把一件用户可见的硬件行为在无人知情时打开；
-#    出问题时第一个怀疑对象是一行 rc，排查成本远高于收益。
-#    驱动侧本来就有几道闸 —— PD sink 认证、revchg_soc_thr 电量阈值、温度窗口都在
-#    驱动里判，不满足就不充 —— 所以"取消写入"不会让任何东西坏掉。
-#
-# 节点实测存在（VERIFIED，athens 原厂 odm/vendor 的 rc 里出现）：
-#   /sys/class/xm_power/charger/charger_common/reverse_quick_charge
-#   同目录下另有 revchg_bcl，属同类开关，本 ROM 不动它。
-#
-# 重新启用前需要先做两件事：
-#   1) 真机确认该功能确实工作（插上被充设备，看电流方向与功率）；
-#   2) 给它一个用户可见的开关（Settings 或 overlay 属性），而不是开机常量。
-# 之后再把下面两行放回去：
-#
-# on property:sys.boot_completed=1
-#     write /sys/class/xm_power/charger/charger_common/reverse_quick_charge 1
-#
-# ⚠️ songyuan 那条注释写的 "up to 27 W (support_revchg_27w)" 未在 athens 上取证，
-#    不照抄。真要写功率上限，先在 athens 上确认 support_revchg_27w 节点存在。
+# Reserved for device-specific init actions.

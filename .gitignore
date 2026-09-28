@@ -21,3 +21,5 @@ __pycache__/
 !avb/oem_boot_descriptors.img
 .env
 .env.*
+
+.ruff_cache/
