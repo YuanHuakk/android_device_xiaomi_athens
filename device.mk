@@ -67,3 +67,5 @@ PRODUCT_VENDOR_PROPERTIES += persist.vendor.sys.pay.ifaa=1
 
 # Xiaomi Camera
 PRODUCT_PACKAGES += MiuiCameraAthens
+# MIVI may enlarge JPEG output for watermark layouts. Keep its requested size.
+PRODUCT_VENDOR_PROPERTIES += persist.vendor.camera.privapp.list=com.android.camera

@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: Apache-2.0
+type hal_misyscore_athens, domain;
+type hal_misyscore_athens_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(hal_misyscore_athens)
+binder_use(hal_misyscore_athens)

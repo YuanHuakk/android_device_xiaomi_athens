@@ -1,10 +1,8 @@
-# Local Xiaomi Camera input
+# Xiaomi Camera
 
-Place the locally prepared, platform-signed `MiuiCamera.apk` here before building.
-It is intentionally ignored by Git. The supported stock version is 6.3.008710.8
-from athens OS3.0.306.0.WPICNXM.
+Place the platform-signed `MiuiCamera.apk` in this directory. The APK is ignored
+by Git. Supported version: 6.3.008710.8 from OS3.0.306.0.WPICNXM.
 
-Use `tools/prepare-miui-camera.py` from the companion `athens_manifest`
-repository, following its `docs/BUILD.md`. The script
-preserves the tested permission flow, internal MIVI dump directory and full HAL
-vendor-tag enumeration. No camera APK is distributed in this source repository.
+Prepare it with `athens_manifest/tools/prepare-miui-camera.py`; see the companion
+repository's `docs/BUILD.md`. The script adapts permissions, the MIVI dump path,
+vendor-tag enumeration and RAW metadata for AOSP.

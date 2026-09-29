@@ -14,3 +14,7 @@
 
 # Stock fingerprint executable label.
 /(odm|vendor/odm)/bin/hw/mfp-daemon u:object_r:hal_fingerprint_default_exec:s0
+
+# MiSys transfers Camera resources into the vendor data directory.
+/vendor/bin/hypsys_vendor u:object_r:hal_hypsys_vendor_exec:s0
+/vendor/bin/hw/vendor\.xiaomi\.hardware\.misys\.core-service u:object_r:hal_misyscore_athens_exec:s0

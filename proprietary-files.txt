@@ -1225,6 +1225,7 @@ vendor/lib64/libGenie.so
 vendor/lib64/libhme.so
 vendor/lib64/libhwliqinterface2.so
 vendor/lib64/libhwlispcffdump.so
+vendor/lib64/libiccprofile.so
 vendor/lib64/libipebpsstriping.so
 vendor/lib64/libipebpsstriping170.so
 vendor/lib64/libipebpsstriping480.so
@@ -1874,3 +1875,15 @@ odm/lib64/libtical.so
 
 # SIA91xx speaker amp firmware required at kernel driver probe.
 odm/firmware/sipa.bin
+
+# MiSys - Xiaomi Camera watermark resource synchronization
+vendor/bin/hypsys_vendor
+vendor/bin/hw/vendor.xiaomi.hardware.misys.core-service
+vendor/etc/init/hypsys_vendor.rc
+vendor/etc/init/vendor.xiaomi.hardware.misys.core-service.rc
+vendor/etc/vintf/manifest/manifest_blackbox.xml
+vendor/etc/vintf/manifest/vendor.xiaomi.hardware.misys.common.xml
+vendor/etc/vintf/manifest/vendor.xiaomi.hardware.misys.core.xml
+vendor/lib64/vendor.xiaomi.hardware.blackbox-V2-ndk.so
+vendor/lib64/vendor.xiaomi.hardware.misys.common-V3-ndk.so
+vendor/lib64/vendor.xiaomi.hardware.misys.core-V1-ndk.so

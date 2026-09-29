@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: Apache-2.0 -->
-<!-- Instances declared in the stock ODM vendor.xiaomi.hardware.miauthsecretd.xml. -->
+<!-- Device-specific interfaces provided by the stock vendor and ODM services. -->
 <compatibility-matrix version="7.0" type="framework">
     <hal format="aidl" optional="true">
         <name>vendor.xiaomi.hardware.miauthsecretd</name>
@@ -18,6 +18,22 @@
         <version>1</version>
         <interface>
             <name>IOldCredentialService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.misys.core</name>
+        <version>1</version>
+        <interface>
+            <name>IMiSysCore</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.blackbox</name>
+        <version>2</version>
+        <interface>
+            <name>IBlackboxImpl</name>
             <instance>default</instance>
         </interface>
     </hal>
