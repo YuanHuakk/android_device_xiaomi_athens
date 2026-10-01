@@ -1,0 +1,1 @@
+get_prop(hal_bluetooth_default, vendor_mink_profile_prop)

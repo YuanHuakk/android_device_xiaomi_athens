@@ -1,0 +1,66 @@
+# Goodix reads the payment provisioning state.
+persist.vendor.sys.biokey.status        u:object_r:vendor_payment_security_prop:s0 exact string
+persist.vendor.sys.biokey_check.status  u:object_r:vendor_payment_security_prop:s0 exact string
+
+# Camera properties absent from the common policy.
+persist.vendor.cameraopt.loglevel              u:object_r:vendor_camera_prop:s0 exact string
+ro.vendor.camera.interpolation.mialgo.support   u:object_r:vendor_camera_prop:s0 exact string
+ro.vendor.dynamiccamera.ability_level          u:object_r:vendor_camera_prop:s0 exact int
+
+vendor.minidump.is.valid u:object_r:vendor_minidump_prop:s0 exact string
+vendor.minidump.crash_reason u:object_r:vendor_minidump_prop:s0 exact string
+vendor.audio.voice.receiver.status u:object_r:vendor_audio_receiver_prop:s0 exact string
+persist.vendor.minfc.dfx.enable u:object_r:vendor_minfc_dfx_prop:s0 exact string
+vendor.sys.thermal.bcl.boot_completed u:object_r:vendor_thermal_normal_prop:s0 exact bool
+persist.vendor.bt.a2dp_offload_cap u:object_r:vendor_bluetooth_prop:s0 exact string
+
+# Xiaomi camera algorithm controls read by the stock camera HAL.
+vendor.camera. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.debug.camera. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.algoengine. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.cameraopt. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.camlog. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.dynamiccamera. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.mialgo. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.mibokeh. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.mihal. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.sat. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.enable.sat. u:object_r:vendor_camera_prop:s0 prefix
+persist.vendor.enable.modeswitch. u:object_r:vendor_camera_prop:s0 prefix
+vendor.xiaomi.eis. u:object_r:vendor_camera_prop:s0 prefix
+vendor.xiaomi.mis. u:object_r:vendor_camera_prop:s0 prefix
+
+vendor.sensors.dynamic_sensor_op_timeout_ms u:object_r:vendor_sensors_prop:s0 exact uint
+persist.vendor.debug.collision.dfx u:object_r:vendor_sensors_prop:s0 exact string
+persist.vendor.debug.collision.disable u:object_r:vendor_sensors_prop:s0 exact string
+persist.vendor.debug.cwb.disable u:object_r:vendor_sensors_prop:s0 exact string
+persist.vendor.debug.qshcalapi u:object_r:vendor_sensors_prop:s0 exact string
+ro.vendor.sensor.maxbrightness u:object_r:vendor_sensors_prop:s0 exact string
+ro.vendor.board.family u:object_r:vendor_board_family_prop:s0 exact string
+init.svc.vendor.vppservice u:object_r:vendor_vpp_status_prop:s0 exact string
+
+vendor.audio_hal.period_size u:object_r:vendor_audio_prop:s0 exact uint
+persist.vendor.dolby.loglevel u:object_r:vendor_audio_prop:s0 exact string
+ro.vendor.dolby.dap_bypassed_on_tiny_volume u:object_r:vendor_audio_prop:s0 exact string
+ro.odm.mm.vibrator.cirrus u:object_r:vendor_audio_prop:s0 exact string
+
+ro.hardware.displayfeature u:object_r:vendor_displayfeature_prop:s0 exact string
+ro.vendor.localhbm.enable u:object_r:vendor_displayfeature_prop:s0 exact bool
+
+persist.vendor.env.spec u:object_r:vendor_radio_prop:s0 exact string
+persist.vendor.esim_os_update_agent u:object_r:vendor_radio_prop:s0 exact string
+persist.vendor.net.logmask u:object_r:vendor_radio_prop:s0 exact string
+ro.vendor.imeisv u:object_r:vendor_radio_prop:s0 exact string
+vendor.rild.libargs u:object_r:vendor_radio_prop:s0 exact string
+ro.vendor.extension_library u:object_r:vendor_mpctl_prop:s0 exact string
+vendor.minksocketProfileLog u:object_r:vendor_mink_profile_prop:s0 exact string
+
+vendor.blackbox. u:object_r:vendor_blackbox_prop:s0 prefix
+vendor.audio.chk.cal.spk u:object_r:vendor_audio_calibration_prop:s0 exact string
+vendor.minfc.dfx.test u:object_r:vendor_minfc_dfx_prop:s0 exact string
+vendor.dumpstate.subsystem_pipe_supported u:object_r:vendor_dumpstate_subsystem_prop:s0 exact bool
+
+persist.vendor.iwlan.logging.logcat u:object_r:vendor_cnd_prop:s0 exact string
+persist.vendor.low.cutoff u:object_r:vendor_camera_prop:s0 exact int
+persist.vendor.cam.icap.dump u:object_r:vendor_camera_prop:s0 exact string
+ro.vendor.aware_available u:object_r:vendor_aware_prop:s0 exact bool

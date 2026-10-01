@@ -1,0 +1,6 @@
+type vendor_proc_mv, fs_type, proc_type;
+type vendor_sysfs_bootinfo, fs_type, sysfs_type;
+type vendor_sysfs_ufs_discard, fs_type, sysfs_type;
+type vendor_sysfs_pmic_pon_log, fs_type, sysfs_type;
+type vendor_sysfs_mi_mempool, fs_type, sysfs_type;
+type vendor_sysfs_ufs_write_booster, fs_type, sysfs_type;

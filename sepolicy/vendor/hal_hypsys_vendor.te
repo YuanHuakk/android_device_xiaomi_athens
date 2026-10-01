@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: Apache-2.0
+allow hal_hypsys_vendor hal_misyscore_athens_service:service_manager find;
+binder_call(hal_hypsys_vendor, hal_misyscore_athens)
+binder_call(hal_hypsys_vendor, hal_hypsys_vendor)
+
+get_prop(hal_hypsys_vendor, boot_status_prop)
+get_prop(hal_hypsys_vendor, vendor_camera_sensor_prop)
+get_prop(hal_hypsys_vendor, vendor_fp_prop)
+get_prop(hal_hypsys_vendor, vendor_wifi_version)
+set_prop(hal_hypsys_vendor, vendor_minidump_prop)
+
+# The stock service maintains the blackbox partition and BSP logs.
+allow hal_hypsys_vendor block_device:dir search;
+allow hal_hypsys_vendor vendor_blackbox_block_device:blk_file { getattr open read write };
+allow hal_hypsys_vendor vendor_io_monitor_device:chr_file { open read write };
+allow hal_hypsys_vendor kmsg_device:chr_file { getattr read };
+allow hal_hypsys_vendor minidump_data_file:dir { add_name open read remove_name search write };
+allow hal_hypsys_vendor minidump_data_file:file { create open setattr unlink write };
+allow hal_hypsys_vendor vendor_bsp_data_log_file:dir { add_name open read remove_name search write };
+allow hal_hypsys_vendor vendor_bsp_data_log_file:file { append create getattr open read setattr unlink write };
+allow hal_hypsys_vendor vfat:dir search;
+allow hal_hypsys_vendor vfat:file { getattr open read write };
+
+allow hal_hypsys_vendor self:netlink_socket { bind create write };
+allow hal_hypsys_vendor self:netlink_kobject_uevent_socket { bind create read };
+allow hal_hypsys_vendor sysfs_wake_lock:file { open write };
+allow hal_hypsys_vendor { proc_tp_file proc_tp_lockdown vendor_proc_mv vendor_sysfs_bootinfo }:file r_file_perms;
+allow hal_hypsys_vendor { vendor_sysfs_battery_supply vendor_sysfs_displayfeature vendor_sysfs_qcom_battery vendor_sysfs_xm_power }:dir search;
+allow hal_hypsys_vendor { vendor_sysfs_battery_supply vendor_sysfs_displayfeature vendor_sysfs_soc_sensitive }:file r_file_perms;
+allow hal_hypsys_vendor vendor_sysfs_hardwareinfo:file { open read write };
+allow hal_hypsys_vendor vendor_sysfs_xm_power:file { getattr open read write };
+
+set_prop(hal_hypsys_vendor, vendor_blackbox_prop)
+allow hal_hypsys_vendor vendor_rawdump_block_device:blk_file getattr;
+allow hal_hypsys_vendor vendor_xbl_log_block_device:blk_file { getattr open read };
+allow hal_hypsys_vendor vendor_oops_block_device:blk_file { open read };
+allow hal_hypsys_vendor vendor_sysfs_bootinfo:dir search;
+allow hal_hypsys_vendor vendor_sysfs_pmic_pon_log:file r_file_perms;
+allow hal_hypsys_vendor vendor_bsp_data_log_file:dir getattr;
+
+# Camera sends shared-memory resources to MiSys for /data/vendor/camera.
+allow hal_hypsys_vendor platform_app_36:fd use;
+allow hal_hypsys_vendor appdomain_tmpfs:file read;
+allow hal_hypsys_vendor vendor_camera_data_file:dir { add_name search write };
+allow hal_hypsys_vendor vendor_camera_data_file:file { create getattr open setattr write };
+allow hal_hypsys_vendor vendor_oops_block_device:blk_file getattr;
+allow hal_hypsys_vendor minidump_data_file:file getattr;
+get_prop(hal_hypsys_vendor, debug_prop)

@@ -1,0 +1,2 @@
+allow init vendor_sysfs_ufs_discard:file { open write };
+allow init vendor_sysfs_mi_mempool:file { open write };

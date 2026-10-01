@@ -1,0 +1,3 @@
+get_prop(hal_fingerprint_default, vendor_payment_security_prop)
+get_prop(hal_fingerprint_default, vendor_touch_hostprocess_prop)
+get_prop(hal_fingerprint_default, vendor_mpctl_prop)

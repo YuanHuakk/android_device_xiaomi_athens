@@ -4,8 +4,11 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Audio tables must precede common.mk to override its copies.
+# Device configurations must precede common.mk to override its copies.
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/perf/perfboostsconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfboostsconfig.xml \
+    $(LOCAL_PATH)/configs/perf/perfboostselection.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfboostselection.xml \
+    $(LOCAL_PATH)/configs/perf/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml \
     $(LOCAL_PATH)/configs/audio/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
     $(LOCAL_PATH)/configs/audio/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     hardware/qcom-caf/sm8850/audio/primary-hal/configs/common/bluetooth_qti_hearing_aid_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_qti_hearing_aid_audio_policy_configuration.xml
@@ -27,6 +30,9 @@ $(call inherit-product, vendor/xiaomi/athens/athens-vendor.mk)
 
 # libhardware loads the stock Goodix module through a .default.so alias.
 PRODUCT_PACKAGES += fingerprint.goodix_us2.default_symlink
+
+# Turbo uses the Tips provider to update thermal warning settings.
+PRODUCT_PACKAGES += TipsPrebuilt
 
 # Camera
 PRODUCT_PACKAGES += \

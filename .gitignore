@@ -1,6 +1,7 @@
 # Generated/proprietary inputs and build output
 /camera/*.apk
 /camera/*.idsig
+/tips/*.apk
 /vendor/
 /out/
 /artifacts/

@@ -1,0 +1,3 @@
+hal_client_domain(mediacodec, vendor_hal_unsignedhexlp)
+get_prop(mediacodec, vendor_mpctl_prop)
+get_prop(mediacodec, zygote_config_prop)

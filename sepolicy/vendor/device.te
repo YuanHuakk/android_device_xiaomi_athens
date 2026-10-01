@@ -1,0 +1,5 @@
+type vendor_blackbox_block_device, dev_type;
+type vendor_io_monitor_device, dev_type;
+type vendor_xbl_log_block_device, dev_type;
+type vendor_oops_block_device, dev_type;
+type vendor_ntsync_device, dev_type;

@@ -18,3 +18,13 @@
 # MiSys transfers Camera resources into the vendor data directory.
 /vendor/bin/hypsys_vendor u:object_r:hal_hypsys_vendor_exec:s0
 /vendor/bin/hw/vendor\.xiaomi\.hardware\.misys\.core-service u:object_r:hal_misyscore_athens_exec:s0
+
+/dev/block/by-name/blackbox u:object_r:vendor_blackbox_block_device:s0
+/dev/io_monitor u:object_r:vendor_io_monitor_device:s0
+/dev/0:0:0:[0-9]+ u:object_r:vendor_bsg_device:s0
+/dev/migt_reset u:object_r:migt_dev:s0
+/dev/block/by-name/rawdump u:object_r:vendor_rawdump_block_device:s0
+/dev/block/by-name/xbl_sc_logs u:object_r:vendor_xbl_log_block_device:s0
+/dev/block/by-name/oops u:object_r:vendor_oops_block_device:s0
+/dev/metis_link u:object_r:migt_dev:s0
+/dev/ntsync u:object_r:vendor_ntsync_device:s0

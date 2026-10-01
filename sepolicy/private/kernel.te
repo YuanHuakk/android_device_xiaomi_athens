@@ -1,0 +1,2 @@
+# krfcommd binds the well-known RFCOMM L2CAP PSM during module initialization.
+allow kernel self:capability net_bind_service;

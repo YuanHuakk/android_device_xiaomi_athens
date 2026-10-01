@@ -1,0 +1,1 @@
+allow parts_app gpu_service:service_manager find;

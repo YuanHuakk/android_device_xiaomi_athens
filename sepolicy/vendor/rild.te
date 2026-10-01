@@ -1,0 +1,5 @@
+set_prop(rild, vendor_cta_prop)
+get_prop(rild, vendor_mink_profile_prop)
+allow rild minidump_data_file:dir search;
+allow rild minidump_data_file:file { open read write };
+get_prop(rild, vendor_pd_locater_dbg_prop)

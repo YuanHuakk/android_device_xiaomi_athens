@@ -1,0 +1,2 @@
+allow vndservicemanager vendor_per_proxy:binder call;
+allow vndservicemanager vendor_wfdhdcphalservice_qti:binder call;

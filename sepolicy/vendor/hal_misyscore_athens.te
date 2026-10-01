@@ -1,6 +1,16 @@
 # SPDX-License-Identifier: Apache-2.0
 type hal_misyscore_athens, domain;
 type hal_misyscore_athens_exec, exec_type, vendor_file_type, file_type;
+type hal_misyscore_athens_service, hal_service_type, protected_service, service_manager_type;
 
 init_daemon_domain(hal_misyscore_athens)
 binder_use(hal_misyscore_athens)
+add_service(hal_misyscore_athens, hal_misyscore_athens_service)
+
+allow hal_misyscore_athens block_device:dir search;
+allow hal_misyscore_athens vendor_blackbox_block_device:blk_file setattr;
+allow hal_misyscore_athens minidump_data_file:dir search;
+allow hal_misyscore_athens minidump_data_file:file setattr;
+allow hal_misyscore_athens self:capability fowner;
+allow hal_misyscore_athens vendor_rawdump_block_device:blk_file setattr;
+allow hal_misyscore_athens { vendor_xbl_log_block_device vendor_oops_block_device }:blk_file setattr;

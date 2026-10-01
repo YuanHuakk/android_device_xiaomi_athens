@@ -1,0 +1,44 @@
+# Legacy properties read by the stock Goodix and camera libraries.
+ro.special_edition                  u:object_r:build_odm_prop:s0 exact bool
+ro.product.camera.livephoto.support  u:object_r:exported_system_prop:s0 exact string
+
+ro.product.mod_device u:object_r:exported_default_prop:s0 exact string
+ro.miui.device.type u:object_r:exported_system_prop:s0 exact string
+ro.miui.region u:object_r:exported_system_prop:s0 exact string
+ro.miui.build.region u:object_r:exported_system_prop:s0 exact string
+ro.mi.os.logs.romtype u:object_r:exported_system_prop:s0 exact string
+camera.preview.debug.debugInfo_view u:object_r:exported_system_prop:s0 exact string
+persist.sensor.sardisable u:object_r:exported_system_prop:s0 exact string
+
+audio.spatializer.dump.switch u:object_r:audio_config_prop:s0 exact string
+ro.miui.support_submix_multichannel u:object_r:audio_config_prop:s0 exact string
+
+ro.ril.oem.ctacode u:object_r:telephony_config_prop:s0 exact string
+persist.radio.restart_rild u:object_r:radio_control_prop:s0 exact string
+persist.dbg.keep_debugfs_mounted u:object_r:debugfs_restriction_prop:s0 exact bool
+sys.displayfeature_hidl u:object_r:graphics_config_prop:s0 exact bool
+
+ro.bdsms u:object_r:build_odm_prop:s0 exact bool
+ro.tiantong u:object_r:build_odm_prop:s0 exact bool
+ro.carrier.name u:object_r:telephony_config_prop:s0 exact string
+ro.cust.test u:object_r:exported_system_prop:s0 exact string
+ro.fota.oem u:object_r:exported_default_prop:s0 exact string
+ro.mi.os.version.incremental u:object_r:exported_system_prop:s0 exact string
+ro.miui.cust_variant u:object_r:exported_system_prop:s0 exact string
+ro.miui.customized.region u:object_r:exported_system_prop:s0 exact string
+ro.product.marketname u:object_r:build_prop:s0 exact string
+
+# TensorFlow Lite in the touch film model probes these legacy properties.
+debug.tflite.trace u:object_r:debug_prop:s0 exact bool
+ro.mediatek.platform u:object_r:exported_default_prop:s0 exact string
+ro.chipname u:object_r:exported_default_prop:s0 exact string
+ro.hardware.chipname u:object_r:exported_default_prop:s0 exact string
+
+# Legacy BSP logging and serial-console controls read by vendor services.
+persist.bsp.logmgr.disable u:object_r:debug_prop:s0 exact bool
+persist.serial.enable u:object_r:debug_prop:s0 exact bool
+
+# Qualcomm OpenCL diagnostics are read during codec and camera initialization.
+rw.vendor.gfx.dcap.process u:object_r:graphics_config_prop:s0 exact string
+rw.vendor.gfx.pagefault u:object_r:graphics_config_prop:s0 exact string
+ro.vendor.oplus.regionmark u:object_r:build_vendor_prop:s0 exact string

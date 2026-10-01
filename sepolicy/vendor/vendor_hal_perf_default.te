@@ -1,0 +1,7 @@
+allow vendor_hal_perf_default sysfs_fs_f2fs:dir { open read search };
+allow vendor_hal_perf_default sysfs_fs_f2fs:file { open read };
+allow vendor_hal_perf_default thermal_data_file:dir { read watch };
+
+# Perf identifies the codec process through /proc/<pid>/cmdline.
+allow vendor_hal_perf_default mediacodec:dir search;
+allow vendor_hal_perf_default mediacodec:file { open read };

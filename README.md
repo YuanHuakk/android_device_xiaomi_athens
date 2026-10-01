@@ -12,7 +12,7 @@ Redmi K100 Pro（athens）的设备树，平台为 Qualcomm SM8850 / canoe。
 使用方法见[构建步骤](https://github.com/YuanHuakk/athens_manifest/blob/pixelos-17/docs/BUILD.md)。
 
 本仓库保留设备配置、资源覆盖、SELinux 规则和专有文件提取脚本。
-vendor 文件、预编译内核和小米相机 APK 需另行准备。
+vendor 文件、预编译内核、小米相机和 Pixel Tips APK 需另行准备。
 
 ## 当前配置
 
@@ -21,9 +21,9 @@ vendor 文件、预编译内核和小米相机 APK 需另行准备。
 | System 安全补丁        | 2026-09-01 |
 | Vendor / Boot 安全补丁 | 2026-08-01 |
 | SELinux                | Permissive |
-| 构建类型               | userdebug  |
+| 构建类型               | user（调试时使用 userdebug） |
 
-保留了启动诊断服务，日志位于 `/metadata/athens-diag/logs`。
+启动诊断服务仅包含在 `userdebug` / `eng` 中，日志位于 `/metadata/athens-diag/logs`。
 
 ## 来源
 

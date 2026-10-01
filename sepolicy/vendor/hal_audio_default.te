@@ -1,0 +1,5 @@
+get_prop(hal_audio_default, vendor_mink_profile_prop)
+get_prop(hal_audio_default, vendor_pd_locater_dbg_prop)
+set_prop(hal_audio_default, vendor_audio_calibration_prop)
+set_prop(hal_audio_default, vendor_audio_receiver_prop)
+allow hal_audio_default vendor_miev_device:chr_file { open write };

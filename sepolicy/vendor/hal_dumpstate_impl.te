@@ -1,0 +1,1 @@
+set_prop(hal_dumpstate_impl, vendor_dumpstate_subsystem_prop)

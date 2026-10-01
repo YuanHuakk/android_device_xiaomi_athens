@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ /*:)
+  *Parser configs to overlay the hint paramters
+  * 0. Do not modify perfboostsconfig.xml, just follow Qcom Baseline
+  *    You can customize all hints using this configuration file
+  * 1. Config Node represents a hint scenario，Customizable fields of this node include
+  *    Id、Type、Enable、Timeout、Target、Temp、Resources、FPS
+  * 2. Required Fields:Id、Enable、Target、Resources
+  *     Id: perfhint should in [VENDOR_PERF_HINT_BEGIN, VENDOR_PERF_HINT_END]
+  *     Enable: true or false
+  *     Target: support platform of qcom
+  *     Resources: opcode and opvalue for this perfhint
+  * 3. Option Fields:Type, Temp, FPS, Timeout
+  *     Type: hintype, default value is -1
+  *     Temp: temperatrue, must from low to high. if a scenario has temp from 25000,40000,44000,48000; when temperatrue<25000 use 25000 resource;
+  *     25000<=temperatrue<40000 use 25000 resource; 40000<=temperatrue<44000 use 40000 resource; 48000<=temperatrue use 48000 resource.
+  *     FPS: fps, default value is 0 for all fps
+  *     Timout: boost duration default value is -1
+  * 4. Selection Node represents applist customizable for a hint scenario, fields of this node inclue
+  *    Timeout, ThermalBreakScene, Resources, Applist
+  * 5. Required Fields: Resources, Applist
+  *     Resources: opcode and opvalue for this perfhint scenario and these applists
+  *     Applist: pkgnames list
+  * 6. Option Fields: Timeout, ThermalBreakScene
+  *     Timeout: boost duration default value is -1
+  *     ThermalBreakScene: correspond thermlalbrealboostconfig.xml Scence field; default value is 0.
+  */
+-->
+
+<BoostConfigs>
+    <PerfBoost>
+    <!-- Lightening_Launches_Lite Base (default) boost-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value-->
+        <!-- CPU_LLCC_BW_MAX_FREQ_V2 resource opcode, value-->
+        <!-- CPU_LLCC_BW_MIN_FREQ_V2 resource opcode, value-->
+        <!-- LLCC DDR LAT GOLD MIN FREQ resource opcode, value-->
+        <!-- GPU_TOUCH_WAKEUP resource opcode, value-->
+        <!-- CPU_CORE_CONTROL_CPU_NOT_PREFERRED resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- GPU_POWER_LEVEL opcode, value-->
+        <!-- MPCTLV3_XIAOMI_SG_CFS_BOOST, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS PRIME Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS PRIME Core resource opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type="1", main launch boost of 0.6sec -->
+        <Config
+            Id="0x00001081" Type="1" Enable="true" Timeout="600" Target="canoe" Temp="25000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63, 0x5FC00000, 0x3f, 0X42804000, 11, 0x5FC40000, 1,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001081" Type="1" Enable="true" Timeout="600" Target="canoe" Temp="40000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63, 0x5FC00000, 0x3f, 0X42804000, 11, 0x5FC40000, 1,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001081" Type="1" Enable="true" Timeout="600" Target="canoe" Temp="44000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63, 0x5FC00000, 0x3f, 0X42804000, 11, 0x5FC40000, 1,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001081" Type="1" Enable="true" Timeout="600" Target="canoe" Temp="48000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63, 0x5FC00000, 0x3f, 0X42804000, 11, 0x5FC40000, 1,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+    <!-- Lightening_Launches_Lite App Launch (default) boost-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- MPCTLV3_SCHED_BG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_FG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_OT_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_TA_UPDOWNMIGRATE, value -->
+        <!-- LLCC DDR LAT GOLD MIN FREQ resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value-->
+        <!-- GPU_TOUCH_WAKEUP resource opcode, value-->
+        <!-- CPU_CORE_CONTROL_CPU_NOT_PREFERRED resource opcode, value-->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_XIAOMI_SG_CFS_BOOST, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <!-- STORAGE_BOOST_MAX_THRESHOLD resource opcode, value-->
+        <!-- STORAGE_BOOST_MIN_THRESHOLD resource opcode, value-->
+
+        <!-- Type="2", Main App Launch Boost -->
+        <Config
+            Id="0x00001081" Type="2" Enable="true" Timeout="2000" Target="canoe" Temp="25000"
+            Resources="0x40C00000, 0x5,
+                      0x40C74000, 0xFF, 0x40408000, 0x10,
+                      0x43C74000, 0x003C0028, 0x43C78000, 0x003C0028, 0x43C7C000, 0x003C0028, 0x43C80000, 0x003C0028, 0x43488000, 0x14A528,
+                      0x40808000, 787200, 0x40808200, 883200, 0x4080C000, 1555200, 0x4080C200, 1497600, 0x42834000, 1, 0x4100C000, 0x3,
+                      0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0, 0x42C54000, 0xffffff, 0x42C50000, 0xfffff"/>
+
+
+        <Config
+            Id="0x00001081" Type="2" Enable="true" Timeout="2000" Target="canoe" Temp="40000"
+            Resources="0x40C00000, 0x5,
+                      0x40C74000, 0xFF, 0x40408000, 0x10,
+                      0x43C74000, 0x003C0028, 0x43C78000, 0x003C0028, 0x43C7C000, 0x003C0028, 0x43C80000, 0x003C0028, 0x43488000, 0x14A528,
+                      0x40808000, 787200, 0x40808200, 883200, 0x4080C000, 1555200, 0x4080C200, 1497600, 0x42834000, 1, 0x4100C000, 0x3,
+                      0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0, 0x42C54000, 0xffffff, 0x42C50000, 0xfffff"/>
+
+        <Config
+            Id="0x00001081" Type="2" Enable="true" Timeout="2000" Target="canoe" Temp="44000"
+            Resources="0x40C00000, 0x5,
+                      0x40C74000, 0xFF, 0x40408000, 0x10,
+                      0x43C74000, 0x003C0028, 0x43C78000, 0x003C0028, 0x43C7C000, 0x003C0028, 0x43C80000, 0x003C0028, 0x43488000, 0x14A528,
+                      0x40808000, 787200, 0x40808200, 883200, 0x4080C000, 1555200, 0x4080C200, 1497600, 0x42834000, 1, 0x4100C000, 0x3,
+                      0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0, 0x42C54000, 0xffffff, 0x42C50000, 0xfffff"/>
+
+        <Config
+            Id="0x00001081" Type="2" Enable="true" Timeout="2000" Target="canoe" Temp="48000"
+            Resources="0x40C00000, 0x5,
+                      0x40C74000, 0xFF, 0x40408000, 0x10,
+                      0x43C74000, 0x003C0028, 0x43C78000, 0x003C0028, 0x43C7C000, 0x003C0028, 0x43C80000, 0x003C0028, 0x43488000, 0x14A528,
+                      0x40808000, 787200, 0x40808200, 883200,
+                      0x4080C000, 1555200, 0x4080C200, 1497600, 0x42834000, 1, 0x4100C000, 0x3,
+                      0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0, 0x42C54000, 0xffffff, 0x42C50000, 0xfffff"/>
+
+    <!-- fast launch Base (default) boost-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value-->
+        <!-- CPU_LLCC_BW_MAX_FREQ_V2 resource opcode, value-->
+        <!-- CPU_LLCC_BW_MIN_FREQ_V2 resource opcode, value-->
+        <!-- LLCC DDR LAT GOLD MIN FREQ resource opcode, value-->
+        <!-- GPU_TOUCH_WAKEUP resource opcode, value-->
+        <!-- CPU_CORE_CONTROL_CPU_NOT_PREFERRED resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- GPU_POWER_LEVEL opcode, value-->
+        <!-- MPCTLV3_XIAOMI_SG_CFS_BOOST, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS PRIME Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS PRIME Core resource opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type="105", fast launch boost of 2sec -->
+        <Config
+            Id="0x00001081" Type="105" Enable="true" Timeout="2000" Target="canoe" Temp="35000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63, 0X42804000, 9, 0x5FC40000, 1,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+    <!-- Lightening_Launches_Lite Game Launch (default) boost-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- MPCTLV3_SCHED_BG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_FG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_OT_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_TA_UPDOWNMIGRATE, value -->
+        <!-- CPUBW_MIN_FREQ resource opcode, value-->
+        <!-- WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value-->
+        <!-- WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value-->
+        <!-- WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value-->
+        <!-- WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value-->
+        <!-- MPCTLV3_XIAOMI_SG_CFS_BOOST, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS PRIME Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS PRIME Core resource opcode, value-->
+
+        <!-- Type="3", Main Game Launch Boost -->
+        <Config
+            Id="0x00001081" Type="3" Enable="true" Timeout="15000" Target="canoe" Temp="35000"
+            Resources="0x40C00000, 0x1,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0x43C74000, 0x003C0028, 0x43C78000, 0x003C0028, 0x43C7C000, 0x003C0028, 0x43C80000, 0x003C0028, 0x41844000, 0x927C0,
+                       0x4080C000, 3628800, 0x4080C200, 4377600,
+                       0x40808000, 748800, 0x40808200, 1017600,
+                       0x5FC40000, 1,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647"/>
+
+    <!--Activity lauch boost-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value-->
+        <!-- CPU_LLCC_BW_MAX_FREQ_V2 resource opcode, value-->
+        <!-- CPU_LLCC_BW_MIN_FREQ_V2 resource opcode, value-->
+        <!-- LLCC DDR LAT GOLD MIN FREQ resource opcode, value-->
+        <!-- GPU_TOUCH_WAKEUP resource opcode, value-->
+        <!-- CPU_CORE_CONTROL_CPU_NOT_PREFERRED resource opcode, value-->
+        <!-- SCHED_TASK_BOOST resource opcode, value-->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS PRIME Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS PRIME Core resource opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type="10", main launch boost of 0.6sec -->
+        <Config
+            Id="0x00001081" Type="10" Enable="true" Timeout="600" Target="canoe" Temp="25000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970,
+                       0x43488000, 0x14A528,
+                       0x42834000, 1, 0x4100C000, 0x3, 0x40C80000, 0x0, 0x5FC00000, 0x3f,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001081" Type="10" Enable="true" Timeout="600" Target="canoe" Temp="40000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970,
+                       0x43488000, 0x14A528,
+                       0x42834000, 1, 0x4100C000, 0x3, 0x40C80000, 0x0, 0x5FC00000, 0x3f,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001081" Type="10" Enable="true" Timeout="600" Target="canoe" Temp="44000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970,
+                       0x43488000, 0x14A528,
+                       0x42834000, 1, 0x4100C000, 0x3, 0x40C80000, 0x0, 0x5FC00000, 0x3f,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001081" Type="10" Enable="true" Timeout="600" Target="canoe" Temp="48000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970,
+                       0x43488000, 0x14A528,
+                       0x42834000, 1, 0x4100C000, 0x3, 0x40C80000, 0x0, 0x5FC00000, 0x3f,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+     <!--Camera Launch -->
+        <!-- MPCTLV3_ALWAYS_ALLOW_OPCODE, 0x1 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, 0xFFF -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0xFFF -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_PRIME_CORE_0, 0xFFF -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_PRIME_CORE_0, 0xFFF -->
+
+        <!-- Type="201", Camera App Launch Boost -->
+        <Config
+            Id="0x00001081" Type="201" Enable="true" Timeout="500" Target="canoe"
+            Resources="0x42C28000, 0x1, 0x40804000, 0xFFF,
+                       0x40800000, 0xFFF, 0x40804200, 0xFFF,
+                       0x40800200, 0xFFF"/>
+
+    <!--Animation boost -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value-->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS PRIME Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS PRIME Core resource opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <Config
+            Id="0x00001083" Enable="true" Timeout="400" Target="canoe" Temp="25000"
+            Resources="0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600, 0x5FC00000, 0x3f,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001083" Enable="true" Timeout="400" Target="canoe" Temp="40000"
+            Resources="0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600, 0x5FC00000, 0x3f,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001083" Enable="true" Timeout="400" Target="canoe" Temp="44000"
+            Resources="0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600, 0x5FC00000, 0x3f,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+        <Config
+            Id="0x00001083" Enable="true" Timeout="400" Target="canoe" Temp="48000"
+            Resources="0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600, 0x5FC00000, 0x3f,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647, 0x5FCC0000, 0"/>
+
+
+    <!-- Silky_Scrolls_Lite: Scroll Boost (Heavy)-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_BIG opcode, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_COLOCATION, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_BOOST, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value -->
+        <!-- CPU_LLCC_BW_MIN_FREQ_V2 resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_ZONE_MAX_UTIL_PCT, NumOfValues, Freq, Percent -->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type 1 Heavy Scrolls : Horizontal and Vertical 60 FPS -->
+        <Config
+            Id="0x00001080" Type="1" Enable="true" Target="canoe"
+            Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                       0x4080C000, 1000000, 0x4080C200, 1000000,
+                       0x40808000, 600000, 0x40808200, 800000,
+                       0x41844000, 350000, 0x40C74000, 0xFF,
+                       0x40408000, 0x63, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1113, 0x40800200, 1017,
+                           0x41844000, 350000, 0x40C74000, 0xFF,
+                           0x40408000, 0x63, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x4080C000, 1000000, 0x4080C200, 1000000,
+                           0x40808000, 600000, 0x40808200, 800000,
+                           0x41844000, 350000, 0x40C74000, 0xFF,
+                           0x40408000, 0x63, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_BIG opcode, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_COLOCATION, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_BOOST, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value -->
+        <!-- MIN_ONLINE_CPU_CLUSTER_PRIME opcode, value-->
+        <!-- CPU_LLCC_BW_MIN_FREQ_V2 resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- MPCTLV3_SCHED_BG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_FG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_OT_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_TA_UPDOWNMIGRATE, value -->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type 1 Heavy Scrolls : Horizontal and Vertical 90+ FPS -->
+        <Config
+            Id="0x00001080" Type="1" Enable="true" Target="canoe" Fps="90"
+            Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                       0x4080C000, 1000000, 0x4080C200, 1000000,
+                       0x40808000, 600000, 0x40808200, 800000,
+                       0x41000200, 2, 0x41844000, 350000,
+                       0x40C74000, 0xFF, 0x40408000, 0x63, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection 
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1113, 0x40800200, 1017,
+                           0x41000200, 2, 0x41844000, 350000,
+                           0x40C74000, 0xFF, 0x40408000, 0x63, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x4080C000, 1000000, 0x4080C200, 1000000,
+                           0x40808000, 600000, 0x40808200, 800000,
+                           0x41000200, 2, 0x41844000, 350000,
+                           0x40C74000, 0xFF, 0x40408000, 0x63, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+        <Config
+            Id="0x00001080" Type="1" Enable="true" Target="canoe" Fps="120, 144, 180, 240"
+            Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                       0x4080C000, 1300000, 0x4080C200, 1300000,
+                       0x40808000, 600000, 0x40808200, 800000,
+                       0x41000200, 2, 0x41844000, 350000,
+                       0x40C74000, 0xFF, 0x40408000, 0x63, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection 
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1324, 0x40800200, 1382,
+                           0x41000200, 2, 0x41844000, 350000,
+                           0x40C74000, 0xFF, 0x40408000, 0x63, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x4080C000, 1300000, 0x4080C200, 1300000,
+                           0x40808000, 600000, 0x40808200, 800000,
+                           0x41000200, 2, 0x41844000, 350000,
+                           0x40C74000, 0xFF, 0x40408000, 0x63, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+
+    <!-- Silky_Scrolls_Lite: Scroll Boost (Medium)-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_BIG opcode, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_COLOCATION, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_BOOST, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value -->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_ZONE_MAX_UTIL_PCT, NumOfValues, Freq, Percent -->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type 2 Medium Scrolls : Horizontal and Vertical 60 FPS -->
+        <Config
+            Id="0x00001080" Type="2" Enable="true" Target="canoe"
+            Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                       0x4080C000, 998000, 0x4080C200, 998000,
+                       0x40808000, 600000, 0x40808200, 800000, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1113, 0x40800200, 1017, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x4080C000, 998000, 0x4080C200, 998000,
+                           0x40808000, 600000, 0x40808200, 800000, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_BIG opcode, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_COLOCATION, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_BOOST, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value -->
+        <!-- MIN_ONLINE_CPU_CLUSTER_PRIME opcode, value-->
+        <!-- MPCTLV3_SCHED_BG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_FG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_OT_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_TA_UPDOWNMIGRATE, value -->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_ZONE_MAX_UTIL_PCT, NumOfValues, Freq, Percent -->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type 2 Medium Scrolls : Horizontal and Vertical 90+ FPS -->
+        <Config
+            Id="0x00001080" Type="2" Enable="true" Target="canoe" Fps="90"
+            Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                       0x4080C000, 998000, 0x4080C200, 998000,
+                       0x40808000, 600000, 0x40808200, 800000,
+                       0x41000200, 1, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1113, 0x40800200, 1017,
+                           0x41000200, 1, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x4080C000, 998000, 0x4080C200, 998000,
+                           0x40808000, 600000, 0x40808200, 800000,
+                           0x41000200, 1, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+        <Config
+            Id="0x00001080" Type="2" Enable="true" Target="canoe" Fps="120, 144, 180, 240"
+            Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                       0x4080C000, 1000000, 0x4080C200, 1000000,
+                       0x40808000, 600000, 0x40808200, 800000,
+                       0x41000200, 1, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1113, 0x40800200, 1017,
+                           0x41000200, 1, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 6, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x4080C000, 1000000, 0x4080C200, 1000000,
+                           0x40808000, 600000, 0x40808200, 800000,
+                           0x41000200, 1, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+
+    <!-- Silky_Scrolls_Lite: Scroll Boost (Light)-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_BIG opcode, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_COLOCATION, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_BOOST, value-->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_ZONE_MAX_UTIL_PCT, NumOfValues, Freq, Percent -->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type 3 Light Scrolls : Horizontal and Vertical 60 FPS -->
+        <Config
+            Id="0x00001080" Type="3" Enable="true" Target="canoe"
+            Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x40800000, 1113, 0x40800200, 1017, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_BIG opcode, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_COLOCATION, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_BOOST, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value -->
+        <!-- MIN_ONLINE_CPU_CLUSTER_PRIME opcode, value-->
+        <!-- MPCTLV3_SCHED_BG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_FG_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_OT_UPDOWNMIGRATE, value -->
+        <!-- MPCTLV3_SCHED_TA_UPDOWNMIGRATE, value -->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_ZONE_MAX_UTIL_PCT, NumOfValues, Freq, Percent -->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type 3 Light Scrolls : Horizontal and Vertical 90+ FPS -->
+        <Config
+            Id="0x00001080" Type="3" Enable="true" Target="canoe" Fps="90"
+            Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0,
+                       0x4080C000, 998000, 0x4080C200, 998000,
+                       0x40808000, 600000, 0x40808200, 800000,
+                       0x41000200, 1, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1113, 0x40800200, 1017,
+                           0x41000200, 1, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x4080C000, 998000, 0x4080C200, 998000,
+                           0x40808000, 600000, 0x40808200, 800000,
+                           0x41000200, 1, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+        <Config
+            Id="0x00001080" Type="3" Enable="true" Target="canoe" Fps="120, 144, 180, 240"
+            Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0,
+                       0x4080C000, 1000000, 0x4080C200, 1000000,
+                       0x40808000, 600000, 0x40808200, 800000,
+                       0x41000200, 1, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                       0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0">
+            <Selection
+                ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1113, 0x40800200, 1017,
+                           0x41000200, 1, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.tencent.mm, com.ss.android.ugc.aweme, com.tencent.mobileqq, com.ss.android.article.news, com.tencent.qqlive, com.xunmeng.pinduoduo, com.UCMobile, com.dragon.read, com.sina.weibo, tv.danmaku.bili"/>
+            <Selection
+                Timeout="2000"
+                Resources="0x40C00000, 0x2, 0x41000000, 4, 0x40C78000, 0, 0x40C7C000, 0,
+                           0x40800000, 1113, 0x40800200, 1017,
+                           0x41000200, 1, 0x43C74000, 0x0023000A, 0x43C78000, 0x0023000A, 0x43C7C000, 0x0023000A, 0x43C80000, 0x0023000A, 0x5FC00000, 0x3f,
+                           0x6081C000, 2, 2611200, 80, 0x5FCC0000, 0"
+                Applist="com.miui.home"/>
+        </Config>
+
+    <!--Folded Vertical Scroll boost-->
+        <!-- CPU_LLCC_BW_MIN_FREQ_V2 resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value -->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_BIG opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value -->
+        <!-- Below additional resources for 120+fps-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_COLOCATION, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_BOOST, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_PRIME opcode, value-->
+        <!-- SCHED_UP_DOWN_MIGRATE PRIME resource opcode, value -->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type="101",  Folded State Vertical Scroll boost -->
+        <Config
+            Id="0x00001080" Type="101" Enable="true" Target="canoe" Fps="60" Mitb="2"
+            Resources="0x41844000, 350000, 0x4080C000, 1000000, 0x4080C200, 1000000,
+                       0x40C00000, 0x2, 0x40C74000, 0xFF,
+                       0x40408000, 0x63, 0x41000000, 6, 0x40808000, 600000, 0x40808200, 800000,
+                       0x5FC00000, 0x3f, 0x5FCC0000, 0"/>
+        <Config
+            Id="0x00001080" Type="101" Enable="true" Target="canoe" Fps="120" Mitb="2"
+            Resources="0x41844000, 350000, 0x4080C000, 1000000, 0x4080C200, 1000000,
+                       0x40C00000, 0x2, 0x40C74000, 0xFF,
+                       0x40408000, 0x63, 0x41000000, 6, 0x40808000, 600000, 0x40808200, 800000,
+                       0x40C78000, 0, 0x40C7C000, 0, 0x41000200, 2, 0x40CE0200, 0x0023000A,
+                       0x5FC00000, 0x3f, 0x5FCC0000, 0"/>
+
+    <!--Folded Horizontal Scroll boost-->
+        <!-- LLCBW_MIN_FREQ resource opcode, value-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_BIG opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value -->
+        <!-- Below additional resources for 120+fps-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_COLOCATION, value-->
+        <!-- SCHED_MIN_TASK_UTIL_FOR_BOOST, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_PRIME opcode, value-->
+        <!-- SCHED_UP_DOWN_MIGRATE PRIME resource opcode, value -->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+
+        <!-- Type="102",  Folded State Horizontal Scroll boost -->
+        <Config
+            Id="0x00001080" Type="102" Enable="true" Target="canoe" Fps="60" Mitb="2"
+            Resources="">
+             <Selection
+                Resources="0x4303C000, 0xA6428, 0x40C00000, 0x2, 0x40C74000, 0xFF,
+                           0x40408000, 0x63, 0x41000000, 6, 0x40800000, 1071, 0x40808200, 800000, 0x5FCC0000, 0"
+                Applist="com.miui.fliphome, com.zhihu.android, com.ss.android.article.news"/>
+        </Config>
+
+        <Config
+            Id="0x00001080" Type="102" Enable="true" Target="canoe" Fps="120" Mitb="2"
+            Resources="">
+            <Selection
+                Resources="0x4303C000, 0xA6428,0x40C00000, 0x2, 0x40C74000, 0xFF,
+                           0x40408000, 0x63, 0x41000000, 6, 0x40800000, 1170, 0x40808200, 800000,
+                           0x40C78000, 0, 0x40C7C000, 0, 0x41000200, 2, 0x40CE0200, 0x0023000A, 0x5FCC0000, 0"
+                Applist="com.miui.fliphome, com.zhihu.android, com.ss.android.article.news"/>
+        </Config>
+
+    <!--App resume boost-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value-->
+        <!-- CPU_LLCC_BW_MAX_FREQ_V2 resource opcode, value-->
+        <!-- CPU_LLCC_BW_MIN_FREQ_V2 resource opcode, value-->
+        <!-- LLCC DDR LAT GOLD MIN FREQ resource opcode, value-->
+        <!-- GPU_TOUCH_WAKEUP resource opcode, value-->
+        <!-- CPU_CORE_CONTROL_CPU_NOT_PREFERRED resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- GPU_POWER_LEVEL opcode, value-->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_XIAOMI_SG_CFS_BOOST, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <!-- STORAGE_BOOST_MAX_THRESHOLD resource opcode, value-->
+        <!-- STORAGE_BOOST_MIN_THRESHOLD resource opcode, value-->
+
+        <Config
+            Id="0x00001082" Type="1" Enable="true" Timeout="800" Target="canoe" Temp="25000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0X42804000, 11, 0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0,
+                       0x42C54000, 0xffffff, 0x42C50000, 0xfffff">
+            <Selection
+                Resources="" Applist="com.android.camera"/>
+            <Selection
+                Timeout="800"
+                Resources="0x40C00000, 0x1, 0x40808000, 1113600, 0x40808200, 1017600,
+                           0x4080C000, 2227200, 0x4080C200, 2112000,
+                           0x41848000, 0x149970, 0x41844000, 0x149970, 0x42834000, 1, 0x4100C000, 0x3,
+                           0x40C74000, 0xFF, 0x40408000, 0x63,
+                           0X42804000, 11, 0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0"
+                Applist="com.xiaomi.subscreencenter"/>
+        </Config>
+        <Config
+            Id="0x00001082" Type="1" Enable="true" Timeout="800" Target="canoe" Temp="40000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0X42804000, 11, 0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0,
+                       0x42C54000, 0xffffff, 0x42C50000, 0xfffff">
+            <Selection
+                Resources="" Applist="com.android.camera"/>
+            <Selection
+                Timeout="800"
+                Resources="0x40C00000, 0x1, 0x40808000, 1113600, 0x40808200, 1017600,
+                           0x4080C000, 2227200, 0x4080C200, 2112000,
+                           0x41848000, 0x149970, 0x41844000, 0x149970, 0x42834000, 1, 0x4100C000, 0x3,
+                           0x40C74000, 0xFF, 0x40408000, 0x63,
+                           0X42804000, 11, 0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0"
+                Applist="com.xiaomi.subscreencenter"/>
+        </Config>
+
+        <Config
+            Id="0x00001082" Type="1" Enable="true" Timeout="800" Target="canoe" Temp="44000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0X42804000, 11, 0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0,
+                       0x42C54000, 0xffffff, 0x42C50000, 0xfffff">
+            <Selection
+                Resources="" Applist="com.android.camera"/>
+            <Selection
+                Timeout="800"
+                Resources="0x40C00000, 0x1, 0x40808000, 1113600, 0x40808200, 1017600,
+                           0x4080C000, 2227200, 0x4080C200, 2112000,
+                           0x41848000, 0x149970, 0x41844000, 0x149970, 0x42834000, 1, 0x4100C000, 0x3,
+                           0x40C74000, 0xFF, 0x40408000, 0x63,
+                           0X42804000, 11, 0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0"
+                Applist="com.xiaomi.subscreencenter"/>
+        </Config>
+
+        <Config
+            Id="0x00001082" Type="1" Enable="true" Timeout="800" Target="canoe" Temp="48000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0X42804000, 11, 0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0,
+                       0x42C54000, 0xffffff, 0x42C50000, 0xfffff">
+            <Selection
+                Resources="" Applist="com.android.camera"/>
+            <Selection
+                Timeout="800"
+                Resources="0x40C00000, 0x1, 0x40808000, 1113600, 0x40808200, 1017600,
+                           0x4080C000, 2227200, 0x4080C200, 2112000,
+                           0x41848000, 0x149970, 0x41844000, 0x149970, 0x42834000, 1, 0x4100C000, 0x3,
+                           0x40C74000, 0xFF, 0x40408000, 0x63,
+                           0X42804000, 11, 0x5FC00000, 0x3f, 0x5FC40000, 1, 0x5FCC0000, 0"
+                Applist="com.xiaomi.subscreencenter"/>
+        </Config>
+
+    <!--App resume boost in app-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value-->
+        <!-- CPU_LLCC_BW_MAX_FREQ_V2 resource opcode, value-->
+        <!-- CPU_LLCC_BW_MIN_FREQ_V2 resource opcode, value-->
+        <!-- LLCC DDR LAT GOLD MIN FREQ resource opcode, value-->
+        <!-- GPU_TOUCH_WAKEUP resource opcode, value-->
+        <!-- CPU_CORE_CONTROL_CPU_NOT_PREFERRED resource opcode, value-->
+        <!-- SCHED_BUSY_HYSTERSIS_CPU_MASK resource opcode, value-->
+        <!-- LPM Bias resource opcode, value-->
+        <!-- STORAGE_BOOST_MIN_THRESHOLD resource opcode, value-->
+        <!-- STORAGE_BOOST_MAX_THRESHOLD resource opcode, value-->
+        <!-- GPU_POWER_LEVEL opcode, value-->
+        <!-- KSWAPD_AFFINITY resource opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <!-- STORAGE_BOOST_MAX_THRESHOLD resource opcode, value-->
+        <!-- STORAGE_BOOST_MIN_THRESHOLD resource opcode, value-->
+
+        <Config
+            Id="0x00001082" Type="2" Enable="true" Timeout="400" Target="canoe" Temp="25000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0x5FC00000, 0x3f, 0x5FCC0000, 0, 0x42C54000, 0xffffff, 0x42C50000, 0xfffff"/>
+
+        <Config
+            Id="0x00001082" Type="2" Enable="true" Timeout="400" Target="canoe" Temp="40000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0x5FC00000, 0x3f, 0x5FCC0000, 0, 0x42C54000, 0xffffff, 0x42C50000, 0xfffff"/>
+
+        <Config
+            Id="0x00001082" Type="2" Enable="true" Timeout="400" Target="canoe" Temp="44000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0x5FC00000, 0x3f, 0x5FCC0000, 0, 0x42C54000, 0xffffff, 0x42C50000, 0xfffff"/>
+
+        <Config
+            Id="0x00001082" Type="2" Enable="true" Timeout="400" Target="canoe" Temp="48000"
+            Resources="0x40C00000, 0x1, 0x40808000, 787200, 0x40808200, 883200,
+                       0x4080C000, 1555200, 0x4080C200, 1497600,
+                       0x41848000, 0x149970, 0x41844000, 0x149970, 0x43488000, 0x14A528, 0x42834000, 1, 0x4100C000, 0x3,
+                       0x40C74000, 0xFF, 0x40408000, 0x63,
+                       0x5FC00000, 0x3f, 0x5FCC0000, 0, 0x42C54000, 0xffffff, 0x42C50000, 0xfffff"/>
+    <!-- XIAOMI PERF MISC BOOST-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ PRIME Core resource opcode, value-->
+        <!-- GPU_MIN_POWER_LEVEL opcode, value-->
+        <!-- GPU_MAX_POWER_LEVEL opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <!-- PULL DOWN STATUS BAR-->
+        <Config
+            Id="0x000011A0" Type="1" Enable="true" Timeout="500" Target="canoe"
+            Resources="0x40C00000, 0x1, 0x40804000, 2707, 0x40804200, 0xEFFF,
+                       0x40800000, 2035, 0x40800200, 1766,
+                       0x42804000, 0x3, 0X42808000, 0x2, 0x5FCC0000, 0"/>
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ PRIME Core resource opcode, value-->
+        <!-- GPU_MIN_POWER_LEVEL opcode, value-->
+        <!-- GPU_MAX_POWER_LEVEL opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <!-- UNLOCK SCREEN -->
+        <Config
+            Id="0x000011A0" Type="2" Enable="true" Timeout="500" Target="canoe"
+            Resources="0x40C00000, 0x1, 0x40804000, 2707, 0x40804200, 0xEFFF,
+                       0x40800000, 2035, 0x40800200, 1766,
+                       0x42804000, 0x5, 0X42808000, 0x2, 0x5FCC0000, 0"/>
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ PRIME Core resource opcode, value-->
+        <!-- GPU_MIN_POWER_LEVEL opcode, value-->
+        <!-- GPU_MAX_POWER_LEVEL opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <!-- LANDSCAPE TO RECNT TASK -->
+        <Config
+            Id="0x000011A0" Type="10" Enable="true" Timeout="500" Target="canoe"
+            Resources="0x40C00000, 0x1, 0x40804000, 2707, 0x40804200, 0xEFFF,
+                       0x40800000, 2380, 0x40800200, 2284,
+                       0x42804000, 0x3, 0X42808000, 0x2, 0x5FCC0000, 0"/>
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ PRIME Core resource opcode, value-->
+        <!-- GPU_MIN_POWER_LEVEL opcode, value-->
+        <!-- GPU_MAX_POWER_LEVEL opcode, value-->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <!-- GESTURE ANIMATION -->
+        <Config
+            Id="0x000011A0" Type="11" Enable="true" Timeout="500" Target="canoe"
+            Resources="0x40C00000, 0x1, 0x40804000, 2707, 0x40804200, 0xEFFF,
+                       0x40800000, 2035, 0x40800200, 1766,
+                       0x42804000, 0x5, 0X42808000, 0x2, 0x5FCC0000, 0"/>
+
+        <!-- TOUCH_UP_BOOST-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- MIN_ONLINE_CPU_CLUSTER_PRIME opcode, value-->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_HIGH_FREQ_PRIME resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_BIG resource opcode, value -->
+        <!-- MPCTLV3_WALT_ADAPTIVE_LOW_FREQ_PRIME resource opcode, value -->
+        <!-- MPCTLV3_SCHED_MIGT_EXCLUSIVE_ENABLE -->
+        <Config
+            Id="0x00001085" Type="1" Enable="true" Timeout="500" Target="canoe"
+            Resources="">
+            <Selection 
+                Timeout="500" ThermalBreakScene="1"
+                Resources="0x40C00000, 0x2, 0x40804000, 0xFFF, 0x40804200, 0xFFF,0x41000200, 1,
+                           0x4080C000, 1000000, 0x4080C200, 1000000, 0x40808000, 600000, 0x40808200, 800000, 0x5FCC0000, 0"
+                Applist="tv.danmaku.bili,com.ss.android.ugc.aweme,com.autonavi.minimap,com.tencent.mm,com.smile.gifmaker,com.eg.android.AlipayGphone,
+                         com.sina.weibo,com.xingin.xhs,com.ss.android.article.news,com.sankuai.meituan,com.ss.android.ugc.aweme.lite,com.tencent.map"/>
+        </Config>
+
+        <!--Rotation latency boost-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ PRIME Core resource opcode, value-->
+        <!-- MPCTLV3_XIAOMI_SG_RT_BOOST -->
+        <!-- SCHED_LEGACY_FREQ_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_LEGACY_FREQ_LEVELS PRIME Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS BIG Core resource opcode, value-->
+        <!-- SCHED_IPC_LEVELS PRIME Core resource opcode, value-->
+        <Config
+            Id="0x00001089" Enable="true" Timeout="1500" Target="canoe"
+            Resources="0x40C00000, 0x1, 0x40804000, 0xFFF, 0x40804200, 0xFFF,
+                       0x40800000, 0xCE6, 0x40800200, 0xFE6, 0x5FC44000, 21,
+                       0x63C5C000, 16, 1, 3302400, 2, 3302400, 3, 3302400, 4, 3302400, 5, 3302400, 6, 3302400, 7, 3302400, 8, 3302400,
+                       0x63C5C200, 16, 1, 4070400, 2, 4070400, 3, 4070400, 4, 4070400, 5, 4070400, 6, 4070400, 7, 4070400, 8, 4070400,
+                       0x63C50000, 5, 3302400, 3302400, 2147483647, 2147483647, 2147483647,
+                       0x63C50200, 5, 4070400, 4070400, 4185600, 4300800, 2147483647"/>
+
+        <!-- XIAOMI PERF MISC BOOST-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ PRIME Core resource opcode, value-->
+        <!-- GPU_MIN_POWER_LEVEL opcode, value-->
+        <!-- GPU_MAX_POWER_LEVEL opcode, value-->
+        <!-- PULL DOWN STATUS BAR-->
+        <Config
+            Id="0x000011A0" Type="1" Enable="true" Timeout="500" Target="alor"
+            Resources="0x40C00000, 0x1, 0x40804000, 2745, 0x40804200, 4089,
+                       0x40800000, 1996, 0x40800200, 1689,
+                       0x42804000, 0x3, 0X42808000, 0x3" />
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ PRIME Core resource opcode, value-->
+        <!-- GPU_MIN_POWER_LEVEL opcode, value-->
+        <!-- GPU_MAX_POWER_LEVEL opcode, value-->
+        <!-- UNLOCK SCREEN -->
+        <Config
+            Id="0x000011A0" Type="2" Enable="true" Timeout="500" Target="alor"
+            Resources="0x40C00000, 0x1, 0x40804000, 2745, 0x40804200, 4089,
+                       0x40800000, 1996, 0x40800200, 1689,
+                       0x42804000, 0x5, 0X42808000, 0x2" />
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ LITTLE Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ TITANIUM Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ LITTLE Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ TITANIUM Core resource opcode, value-->
+        <!-- GPU_MIN_POWER_LEVEL opcode, value-->
+        <!-- GPU_MAX_POWER_LEVEL opcode, value-->
+        <!-- LANDSCAPE TO RECNT TASK -->
+        <Config
+            Id="0x000011A0" Type="10" Enable="true" Timeout="500" Target="alor"
+            Resources="0x40C00000, 0x1, 0x40804000, 2745, 0x40804200, 4089,
+                       0x40800000, 2400, 0x40800200, 2246,
+                       0x42804000, 0x2, 0X42808000, 0x2" />
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ LITTLE Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ TITANIUM Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ LITTLE Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ TITANIUM Core resource opcode, value-->
+        <!-- GPU_MIN_POWER_LEVEL opcode, value-->
+        <!-- GPU_MAX_POWER_LEVEL opcode, value-->
+        <!-- GESTURE ANIMATION -->
+        <Config
+            Id="0x000011A0" Type="11" Enable="true" Timeout="500" Target="alor"
+            Resources="0x40C00000, 0x1, 0x40804000, 2745, 0x40804200, 4089,
+                       0x40800000, 1996, 0x40800200, 1689,
+                       0x42804000, 0x5, 0X42808000, 0x2" />
+
+        <!-- SCHEDBOOST resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MAX_FREQ PRIME Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ BIG Core resource opcode, value-->
+        <!-- CPUBOOST_MIN_FREQ PRIME Core resource opcode, value-->
+        <!-- FOLD STATE CHANGE-->
+        <Config
+            Id="0x000011A0" Type="20" Enable="true" Timeout="500" Target="alor"
+            Resources="0x40C00000, 0x1, 0x40804000, 0xFFF, 0x40804200, 0xFFF,
+                       0x40800000, 1555, 0x40800200, 1689" />
+    </PerfBoost>
+</BoostConfigs>
+

@@ -28,10 +28,9 @@ BOARD_MKBOOTIMG_ARGS += --os_version 0 --os_patch_level 0
 BOARD_MKBOOTIMG_INIT_ARGS += --os_version 0 --os_patch_level 0
 
 # SELinux
-ifneq ($(filter eng userdebug,$(TARGET_BUILD_VARIANT)),)
+$(call soong_config_set_bool,libinit,allow_permissive_selinux,true)
 BOARD_BOOTCONFIG += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-endif
 
 # NFC; the common manifest already declares the secure element.
 ODM_MANIFEST_FILES := \
@@ -43,6 +42,7 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
 
 # SELinux policy
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 
 # Display
 TARGET_SCREEN_DENSITY := 480
