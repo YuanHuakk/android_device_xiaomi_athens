@@ -25,6 +25,9 @@ PRODUCT_BUILD_PVMFW_IMAGE := false
 # The stock PAL backend requires A2DP offload for LE Audio as well.
 PRODUCT_VENDOR_PROPERTIES += persist.bluetooth.a2dp_offload.disabled=false
 
+# Match the radio region of the stock HyperOS 4 China build.
+PRODUCT_VENDOR_PROPERTIES += ro.vendor.radio.build_region=cn
+
 # Vendor files
 $(call inherit-product, vendor/xiaomi/athens/athens-vendor.mk)
 
