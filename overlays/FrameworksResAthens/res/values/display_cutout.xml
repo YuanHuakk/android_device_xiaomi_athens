@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Stock HyperOS OS4.0.6.0.XPICNXM bounds for the centered camera cutout, in native pixels. -->
+    <string name="config_mainBuiltInDisplayCutout" translatable="false">M 0,0 H -36 V 142 H 36 V 0 H 0 Z</string>
+</resources>
