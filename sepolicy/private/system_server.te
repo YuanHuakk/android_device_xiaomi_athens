@@ -1,2 +1,1 @@
 get_prop(system_server, custom_version_prop)
-get_prop(system_server, pih_disable_prop)
