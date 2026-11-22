@@ -143,7 +143,7 @@ odm/lib/rfsa/adsp/libQnnHtpV81Skel.so
 odm/lib/rfsa/adsp/libQnnNetRunDirectV81Skel.so
 odm/lib/rfsa/adsp/libQnnSaver.so
 odm/lib/rfsa/adsp/libQnnSystem.so
-vendor/lib/rfsa/adsp/libSnpeHtpV81Skel.so
+odm/lib/rfsa/adsp/libSnpeHtpV81Skel.so;SYMLINK=vendor/lib/rfsa/adsp/libSnpeHtpV81Skel.so
 odm/lib64/rfs/dsp/libapn_dsp_skel.so
 odm/lib64/rfs/dsp/libbitml_nsp_81na_skel.so
 odm/lib64/rfs/dsp/libbitml_nsp_skel.so
@@ -160,7 +160,7 @@ vendor/lib64/rfs/dsp/libnspextensioncopyprovider.so
 vendor/lib64/rfs/dsp/libnspextensionfrcprovider.so
 vendor/lib64/rfs/dsp/libnspextensiongenericqnnprovider.so
 vendor/lib64/rfs/dsp/libnspextensionsuperresolutionprovider.so
-vendor/lib64/rfs/dsp/libqsegnetengine_dsp_skel.so
+odm/lib64/rfs/dsp/libqsegnetengine_dsp_skel.so;SYMLINK=vendor/lib64/rfs/dsp/libqsegnetengine_dsp_skel.so
 vendor/lib64/rfs/dsp/libscveT2T_skel.so
 vendor/lib64/rfs/dsp/libsvDescMatch_dsp.so
 vendor/lib64/rfs/dsp/libsvDescMatchImpl_dsp_skel.so
@@ -933,7 +933,7 @@ odm/lib64/camera/com.qti.tuned.default.canoe.bin
 # Camera (vendor)
 vendor/etc/camera/cameraopt_perf.json
 vendor/etc/camera/cameraopt_vendor.json
-vendor/lib64/camera/bitmlconfig.bin
+odm/lib64/camera/bitmlconfig.bin;SYMLINK=vendor/lib64/camera/bitmlconfig.bin
 odm/lib64/camera/camxfl115indices.bin
 odm/lib64/camera/camxfl300v1indices.bin
 odm/lib64/camera/camxfl300v2indices.bin
@@ -942,8 +942,8 @@ odm/lib64/camera/chifdnodeconfig.bin
 odm/lib64/camera/com.qti.chi.featurecompatibilityspecification.sm7750.bin
 odm/lib64/camera/com.qti.chi.featurecompatibilityspecification.sm8750.bin
 odm/lib64/camera/com.qti.chi.featurecompatibilityspecification.sm8850.bin
-vendor/lib64/camera/com.qti.ofe.profiledb.default.bin
-vendor/lib64/camera/com.qti.ofe.profiledb.sm8850.bin
+odm/lib64/camera/com.qti.ofe.profiledb.default.bin;SYMLINK=vendor/lib64/camera/com.qti.ofe.profiledb.default.bin
+odm/lib64/camera/com.qti.ofe.profiledb.sm8850.bin;SYMLINK=vendor/lib64/camera/com.qti.ofe.profiledb.sm8850.bin
 odm/lib64/camera/components/com.mi.node.fd.so
 odm/lib64/camera/components/com.mi.node.mimovie.so
 odm/lib64/camera/components/com.mi.node.mioisverify.so
@@ -1061,7 +1061,7 @@ odm/lib64/camera/fdconfigsecure.bin
 odm/lib64/camera/fdconfigvideo.bin
 odm/lib64/camera/fdconfigvideolite.bin
 odm/lib64/camera/libmicamvendorcustom.so
-vendor/lib64/camera/qfdserviceconfig.bin
+odm/lib64/camera/qfdserviceconfig.bin;SYMLINK=vendor/lib64/camera/qfdserviceconfig.bin
 odm/lib64/camx.device-impl.so
 odm/lib64/camx.provider-impl.so
 odm/lib64/com.qti.camx.chiiqutils.so
@@ -1135,11 +1135,11 @@ odm/lib64/com.xiaomi.stubv1.camx.so
 odm/lib64/com.xiaomi.stubv1.chi.so
 odm/lib64/com.xiaomi.xmdevprotection.tokmd.so
 odm/lib64/com.xiaomi.xmxmessage2center.so
-vendor/lib64/hw/camera.qcom.core.so
+odm/lib64/hw/camera.qcom.core.so;SYMLINK=vendor/lib64/hw/camera.qcom.core.so
 odm/lib64/hw/camera.qcom.sm8850.so
-vendor/lib64/hw/camera.qcom.so
+odm/lib64/hw/camera.qcom.so;SYMLINK=vendor/lib64/hw/camera.qcom.so
 odm/lib64/hw/com.qti.chi.offline.so
-vendor/lib64/hw/com.qti.chi.override.so
+odm/lib64/hw/com.qti.chi.override.so;SYMLINK=vendor/lib64/hw/com.qti.chi.override.so
 odm/lib64/immunesystem.db.sqlite3.so
 odm/lib64/libAF.so
 odm/lib64/libaidenoiser.so
@@ -1163,7 +1163,7 @@ odm/lib64/libcamxcoreutils.so
 odm/lib64/libcamxcsl.so
 odm/lib64/libcamxcslhw.so
 odm/lib64/libcamxdumpinforecorder.so
-vendor/lib64/libcamxexternalformatutils.so
+odm/lib64/libcamxexternalformatutils.so;SYMLINK=vendor/lib64/libcamxexternalformatutils.so
 odm/lib64/libcamxfdengine.so
 odm/lib64/libqfdadapter.so
 odm/lib64/libqfdservice.so
@@ -1280,7 +1280,7 @@ vendor/lib64/libSEESalt.so
 odm/lib64/libshadowhook.so
 odm/lib64/libsiminputgenutil.so
 odm/lib64/libsimulation.so
-vendor/lib64/libSNPE.so
+odm/lib64/libSNPE.so;SYMLINK=vendor/lib64/libSNPE.so
 odm/lib64/libSnpeDspV66Stub.so;FIX_SONAME
 odm/lib64/libSnpeHta.so
 odm/lib64/libSnpeHtpPrepare.so
