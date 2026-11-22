@@ -1,15 +1,20 @@
-# Redmi K100 Pro — PixelOS
+# Redmi K100 Pro — Android 17 设备树
 
 Redmi K100 Pro（athens）的设备树，平台为 Qualcomm SM8850 / canoe。
 放到源码树的 `device/xiaomi/athens` 下使用。
 
-适配 Android 17，厂商文件来自 OS3.0.306.0.WPICNXM。
+共享设备树分支为 `android-17`，用于构建 PixelOS 和 Evolution X。
+厂商文件来自国行 HyperOS 4 `OS4.0.6.0.XPICNXM` 线刷包。
 
 ## 构建依赖
 
-配套的 [athens_manifest](https://github.com/YuanHuakk/athens_manifest) 仓库保存源码清单、
-上游项目补丁、构建工具和构建文档。
-使用方法见[构建步骤](https://github.com/YuanHuakk/athens_manifest/blob/pixelos-17/docs/BUILD.md)。
+在配套的 [athens_manifest](https://github.com/YuanHuakk/athens_manifest) 仓库选择对应分支，
+按该分支的 `docs/BUILD.md` 同步源码和准备构建输入。
+
+| ROM | athens_manifest 分支 | ROM 上游分支 | 构建产品 |
+| --- | --- | --- | --- |
+| PixelOS | `pixelos-17` | `seventeen` | `custom_athens` |
+| Evolution X | `evox-17` | `cnb` | `lineage_athens` |
 
 本仓库保留设备配置、资源覆盖、SELinux 规则和专有文件提取脚本。
 vendor 文件、预编译内核、小米相机和 Pixel Tips APK 需另行准备。
@@ -18,10 +23,10 @@ vendor 文件、预编译内核、小米相机和 Pixel Tips APK 需另行准备
 
 | 项目                   | 值         |
 | ---------------------- | ---------- |
-| System 安全补丁        | 2026-09-01 |
-| Vendor / Boot 安全补丁 | 2026-08-01 |
+| System 安全补丁        | 由 ROM 的上游构建配置决定 |
+| Vendor / Boot 安全补丁 | 2026-10-01 |
 | SELinux                | Permissive |
-| 构建类型               | user（调试时使用 userdebug） |
+| 构建类型               | 支持 user 和 userdebug |
 
 启动诊断服务仅包含在 `userdebug` / `eng` 中，日志位于 `/metadata/athens-diag/logs`。
 

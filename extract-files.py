@@ -125,7 +125,7 @@ blob_fixups: blob_fixups_user_type = {
         "odm/lib64/libAncHumanPreviewBokeh.so",
         "odm/lib64/libarcsoft_beautyshot.so",
         "odm/lib64/libwa_widelens_undistort.so",
-        "vendor/lib64/libMiPhotoFilter.so",
+        "odm/lib64/libMiPhotoFilter.so",
     ): blob_fixup()
     .clear_symbol_version("AHardwareBuffer_allocate")
     .clear_symbol_version("AHardwareBuffer_describe")
@@ -135,8 +135,8 @@ blob_fixups: blob_fixups_user_type = {
     .clear_symbol_version("AHardwareBuffer_lock")
     .clear_symbol_version("AHardwareBuffer_isSupported"),
     (
-        "vendor/lib64/camera/components/com.qti.node.dewarp.so",
-        "vendor/lib64/vendor.qti.hardware.camera.offlinecamera-service-impl.so",
+        "odm/lib64/camera/components/com.qti.node.dewarp.so",
+        "odm/lib64/vendor.qti.hardware.camera.offlinecamera-service-impl.so",
     ): blob_fixup().replace_needed(
         "android.hardware.graphics.allocator-V1-ndk.so",
         "android.hardware.graphics.allocator-V2-ndk.so",
@@ -181,17 +181,17 @@ blob_fixups: blob_fixups_user_type = {
         "odm/lib64/camera/preloadplugins/com.xiaomi.plugin.offlineyuvsplit.so",
         "odm/lib64/camera/preloadplugins/com.xiaomi.plugin.offlineyuvwarp.so",
         "odm/lib64/com.xiaomi.plugin.ecdengine.so",
-        "vendor/bin/hw/vendor.qti.camera.provider-service_64",
-        "vendor/lib64/camera/components/com.mi.node.fd.so",
-        "vendor/lib64/camera/components/com.qti.node.fd.so",
-        "vendor/lib64/com.xiaomi.stub.chi.so",
-        "vendor/lib64/com.xiaomi.stubv1.camx.so",
+        "odm/bin/hw/vendor.qti.camera.provider-service_64",
+        "odm/lib64/camera/components/com.mi.node.fd.so",
+        "odm/lib64/camera/components/com.qti.node.fd.so",
+        "odm/lib64/com.xiaomi.stub.chi.so",
+        "odm/lib64/com.xiaomi.stubv1.camx.so",
         "vendor/lib64/hw/camera.qcom.core.so",
-        "vendor/lib64/libcamxdumpinforecorder.so",
-        "vendor/lib64/libcom.xiaomi.dsac.so",
-        "vendor/lib64/libmicamera_aidl_provider.so",
-        "vendor/lib64/libmicamera_hal_core.so",
-        "vendor/lib64/libsimulation.so",
+        "odm/lib64/libcamxdumpinforecorder.so",
+        "odm/lib64/libcom.xiaomi.dsac.so",
+        "odm/lib64/libmicamera_aidl_provider.so",
+        "odm/lib64/libmicamera_hal_core.so",
+        "odm/lib64/libsimulation.so",
     ): blob_fixup().replace_needed("libtinyxml2.so", "libtinyxml2-v36.so"),
     ("vendor/lib64/libcameraopt.so",): blob_fixup().add_needed(
         "libprocessgroup_shim.so"

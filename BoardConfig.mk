@@ -9,7 +9,7 @@ DEVICE_PATH := device/xiaomi/athens
 KERNEL_PATH := $(DEVICE_PATH)-kernel
 
 # Kernel module directory name
-KERNEL_RELEASE := 6.12.69-android16-6-g0d80ee00f747-ab15461283-4k
+KERNEL_RELEASE := 6.12.69-android16-6-g0a1dc0413ec7-ab16271006-4k
 
 # Common configuration
 include device/xiaomi/sm8850-common/BoardConfigCommon.mk
@@ -20,7 +20,7 @@ BOARD_AVB_VBMETA_SYSTEM := $(filter-out pvmfw,$(BOARD_AVB_VBMETA_SYSTEM))
 BOARD_BOOTCONFIG := $(filter-out androidboot.hypervisor.protected_vm.supported=true,$(BOARD_BOOTCONFIG))
 BOARD_BOOTCONFIG += androidboot.hypervisor.protected_vm.supported=false
 
-# ABL requires descriptors for the preserved pvmfw and countrycode partitions.
+# ABL requires the stock OS4.0.6.0.XPICNXM descriptors for pvmfw and countrycode.
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --include_descriptors_from_image $(DEVICE_PATH)/avb/oem_boot_descriptors.img
 
 # GKI v4 reads OS and patch levels from AVB properties.
@@ -79,13 +79,13 @@ BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 16095641600
 # Use the physical partition size, not the padded image file size.
 BOARD_DTBOIMG_PARTITION_SIZE := 33554432
 
-# Patch levels for the stock OS3.0.306.0 vendor and kernel.
-BOOT_SECURITY_PATCH := 2026-08-01
+# Patch levels for the stock OS4.0.6.0.XPICNXM vendor and kernel.
+BOOT_SECURITY_PATCH := 2026-10-01
 VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
 
 # Keep the installed boot rollback index; use the platform date for system.
-BOARD_AVB_BOOT_ROLLBACK_INDEX := 1785542400
-BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(shell if [ $(PLATFORM_SECURITY_PATCH_TIMESTAMP) -gt 1785542400 ]; then echo $(PLATFORM_SECURITY_PATCH_TIMESTAMP); else echo 1785542400; fi)
+BOARD_AVB_BOOT_ROLLBACK_INDEX := 1790812800
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(shell if [ $(PLATFORM_SECURITY_PATCH_TIMESTAMP) -gt 1790812800 ]; then echo $(PLATFORM_SECURITY_PATCH_TIMESTAMP); else echo 1790812800; fi)
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX := $(BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX)
 
 # Vendor configuration
