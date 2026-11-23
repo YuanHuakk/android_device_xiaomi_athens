@@ -2,6 +2,8 @@
 
 # Display
 persist.sys.miui_resolution=1156,2510,480
+# The stock vivid LUT overrides Android's natural color mode on wake.
+ro.vendor.display.vivid_calibration.enable=0
 
 # Touch
 ro.vendor.touchfeature.type=247

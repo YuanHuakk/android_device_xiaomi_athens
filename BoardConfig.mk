@@ -27,11 +27,6 @@ BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --include_descriptors_from_image $(DEVICE_PA
 BOARD_MKBOOTIMG_ARGS += --os_version 0 --os_patch_level 0
 BOARD_MKBOOTIMG_INIT_ARGS += --os_version 0 --os_patch_level 0
 
-# SELinux
-$(call soong_config_set_bool,libinit,allow_permissive_selinux,true)
-BOARD_BOOTCONFIG += androidboot.selinux=permissive
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-
 # NFC; the common manifest already declares the secure element.
 ODM_MANIFEST_FILES := \
     $(DEVICE_PATH)/configs/vintf/nfc-service-nxp.xml
@@ -55,6 +50,7 @@ TARGET_NO_KERNEL_OVERRIDE := true
 
 # UAPI headers consumed by the patched Soong configuration.
 TARGET_PREBUILT_KERNEL_HEADERS := $(KERNEL_PATH)/kernel-headers.tar.gz
+$(call soong_config_set,lineageKernelHeaders,prebuilt_module,//$(KERNEL_PATH):athens_qti_kernel_headers)
 PRODUCT_COPY_FILES += \
     $(KERNEL_PATH)/kernel:kernel
 

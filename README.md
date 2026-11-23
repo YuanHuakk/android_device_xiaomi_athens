@@ -25,8 +25,8 @@ vendor 文件、预编译内核、小米相机和 Pixel Tips APK 需另行准备
 | ---------------------- | ---------- |
 | System 安全补丁        | 由 ROM 的上游构建配置决定 |
 | Vendor / Boot 安全补丁 | 2026-10-01 |
-| SELinux                | Permissive |
-| 构建类型               | 支持 user 和 userdebug |
+| SELinux                | Enforcing |
+| 构建类型               | 默认 `user`，可选 `userdebug` |
 
 启动诊断服务仅包含在 `userdebug` / `eng` 中，日志位于 `/metadata/athens-diag/logs`。
 
