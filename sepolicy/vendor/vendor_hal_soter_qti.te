@@ -1,0 +1,2 @@
+# The lazy AIDL Soter HAL receives client-state callbacks from servicemanager.
+binder_use(vendor_hal_soter_qti)
