@@ -1,0 +1,2 @@
+# PixelOS and Evolution X define this ROM version property type.
+get_prop(system_server, custom_version_prop)

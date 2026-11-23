@@ -38,6 +38,9 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
 # SELinux policy
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
+ifneq ($(filter custom_athens lineage_athens,$(TARGET_PRODUCT)),)
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/rom-version/private
+endif
 
 # Display
 TARGET_SCREEN_DENSITY := 480
