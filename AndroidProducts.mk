@@ -6,4 +6,5 @@
 
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/lineage_athens.mk \
-    $(LOCAL_DIR)/custom_athens.mk
+    $(LOCAL_DIR)/custom_athens.mk \
+    $(LOCAL_DIR)/infinity_athens.mk

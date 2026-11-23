@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<resources>
+    <!-- Infinity BatteryService also requires an OEM charging capability flag. -->
+    <bool name="config_hasTurboPowerCharger">true</bool>
+    <string name="config_oemFastChargerStatusPath" translatable="false">/sys/class/xm_power/charger/charger_common/quick_charge_type</string>
+    <string name="config_oemFastChargerStatusValue" translatable="false">4</string>
+</resources>
