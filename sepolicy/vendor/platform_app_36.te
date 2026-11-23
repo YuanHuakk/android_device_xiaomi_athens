@@ -7,4 +7,8 @@ hal_client_domain(platform_app_36, vendor_hal_unsignedhexlp)
 hal_client_domain(platform_app_36, vendor_hal_qspmhal)
 get_prop(platform_app_36, vendor_camera_sensor_prop)
 get_prop(platform_app_36, vendor_camera_p3enable_prop)
+
+# SoterService reads the fingerprint type and in-display sensor geometry.
+get_prop(platform_app_36, vendor_fp_prop)
+
 allow platform_app_36 { proc_pressure_cpu proc_pressure_mem }:file r_file_perms;

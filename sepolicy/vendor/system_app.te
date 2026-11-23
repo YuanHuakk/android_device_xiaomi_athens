@@ -1,1 +1,6 @@
 get_prop(system_app, vendor_aware_prop)
+
+# IFAAService uses the system UID to access Xiaomi's payment HAL and fingerprint properties.
+hal_client_domain(system_app, hal_mlipay)
+get_prop(system_app, vendor_fp_prop)
+get_prop(system_app, vendor_payment_security_prop)
