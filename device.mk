@@ -46,6 +46,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/display/display_id_4630946928389601939.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_id_4630946928389601939.xml
 
+# Sensor capabilities exposed by the Athens HAL.
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/sensors/athens-sensor-features.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/athens-sensor-features.xml
+
 # Composer interface required by the stock service.
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.display.composer3-V4-ndk.vendor

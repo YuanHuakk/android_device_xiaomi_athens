@@ -1360,6 +1360,9 @@ odm/etc/display/B_Com_Gary_Gain.csv
 odm/etc/display/G_Com_Gary_Gain.csv
 odm/etc/display/R_Com_Gary_Gain.csv
 
+# Athens display panel calibration
+odm/etc/mdss_dsi_athens_42_0d_0a_dsc_cmd_mi.xml
+
 # Dolby
 odm/etc/dolby/dax-default-spatializer.xml
 odm/etc/dolby/dax-default.xml
