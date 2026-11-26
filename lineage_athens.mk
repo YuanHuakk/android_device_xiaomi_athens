@@ -15,5 +15,5 @@ $(call inherit-product, device/xiaomi/athens/device.mk)
 PRODUCT_DEVICE := athens
 PRODUCT_NAME := lineage_athens
 PRODUCT_BRAND := Redmi
-PRODUCT_MODEL := Redmi K100 Pro
-PRODUCT_MANUFACTURER := xiaomi
+PRODUCT_MODEL := M511CD
+PRODUCT_MANUFACTURER := Xiaomi
